@@ -7,6 +7,9 @@ wanandroid flutter version
 ## 嵌套滚动型Widget处理方案（首页）
 利用Slivers完成，相关信息见[medium的这篇文章](https://medium.com/flutter/slivers-demystified-6ff68ab0296f)
 
+
+## 国际化
+国际化使用了[Flutter Intl](https://plugins.jetbrains.com/plugin/13666-flutter-intl) 插件，详情见插件介绍和使用方法
 ## Getting Started
 
 This project is a starting point for a Flutter application.

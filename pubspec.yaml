@@ -36,6 +36,9 @@ dependencies:
   url_launcher: ^5.1.3
   # 用于显示包含有html文本字符串的标题或者内容
   flutter_html: ^0.8.2
+  # 国际化，见 https://plugins.jetbrains.com/plugin/13666-flutter-intl
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -82,3 +85,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true
