@@ -1,141 +1,67 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-/// 由于系统本身存在banner，因此和我们自定义的banner冲突，需要处理冲突
-import 'package:wanandroid_flutter/banner/banner.dart' as CustomBanner;
-import 'package:wanandroid_flutter/common/WebUtil.dart';
-import 'package:wanandroid_flutter/data/entity/wan_article.dart';
-import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
-import 'package:wanandroid_flutter/ui/article/article.dart';
-
-import 'banner/banner_item.dart';
-import 'data/entity/wan_banner.dart';
+import 'package:wanandroid_flutter/ui/page/home_page.dart';
+import 'package:wanandroid_flutter/ui/page/wechat_page.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Demo'),
+      home: PageContainer(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+class PageContainer extends StatefulWidget {
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<StatefulWidget> createState() => _PageContainerState();
+
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  List<BannerItem> bannerList = [];
-  List<WanArticle> articleList = [];
-  int curPage = -1;
-  bool hasMore = false;
-
-  @override
-  void initState() {
-    _loadBanners();
-    _loadArticles();
-    super.initState();
-  }
-
-  _loadBanners() async {
-    List<WanBanner> banners = await WanRepository().banner();
-    List<BannerItem> transforms = [];
-    for(var i = 0; i < banners.length; i++){
-      transforms.add(BannerItem.create(banners[i].imagePath, banners[i].title, banners[i].url));
-    }
-    if(!mounted) return ;
-    setState(() {
-      bannerList = transforms;
-    });
-  }
-
-  _loadArticles() async {
-    ArticleListWrapper result = await WanRepository().homePageArticle(++curPage);
-    setState(() {
-      curPage = result.curPage;
-      articleList = result.datas;
-      hasMore = !result.over;
-    });
-  }
+class _PageContainerState extends State<PageContainer> {
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
-      body: Container(
-        // Slivers实现，见https://medium.com/flutter/slivers-demystified-6ff68ab0296f
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              title: Text(widget.title),
-              floating: true,
-              snap: true,
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                    CustomBanner.Banner(
-                          bannerList,
-                          itemClickListener: (index, item){
-                            /// 点击跳转
-                            jumpWeb(item.jumpLink);
-                          }
-                      ),
-                ]
-              )
-            ),
-            SliverList(
-              // 大小设置成*2-1目的是增加分割线，见
-              // https://stackoverflow.com/questions/57752853/separator-divider-in-sliverlist-flutter
-              delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index){
-                    final int itemIndex = index ~/ 2;
-                    if(index.isEven){
-                      return Article(articleList[itemIndex]);
-                    }
-                    return Divider(height: 0, color: Colors.grey,);
-                  },
-                  semanticIndexCallback: (Widget widget, int localIndex){
-                    if(localIndex.isEven) {
-                      return localIndex ~/ 2;
-                    }
-                    return null;
-                  },
-                  childCount: max(0, articleList.length * 2 - 1)
-              ),
-            )
-          ],
-        ),
+      // 底部切换栏
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (index){
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        currentIndex: currentIndex,
+        items: [
+          // 配置图标
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('首页')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.contacts),
+            title: Text('微信公众号')
+          )
+        ],
+      ),
+      body: IndexedStack(
+        children: <Widget>[
+          HomePage(title: '首页'),
+          WechatPage(title: '微信公众号',)
+        ],
+        index: currentIndex,
       ),
     );
   }
+
 }
