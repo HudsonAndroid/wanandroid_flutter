@@ -4,6 +4,8 @@ wanandroid flutter version
 
 ## [Banner实践](/lib/banner)
 
+## 嵌套滚动型Widget处理方案（首页）
+利用Slivers完成，相关信息见[medium的这篇文章](https://medium.com/flutter/slivers-demystified-6ff68ab0296f)
 
 ## Getting Started
 
