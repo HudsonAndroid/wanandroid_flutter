@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wanandroid_flutter/generated/l10n.dart';
 /// 由于系统本身存在banner，因此和我们自定义的banner冲突，需要处理冲突
 import 'package:wanandroid_flutter/ui/banner/banner.dart' as CustomBanner;
 import 'package:wanandroid_flutter/ui/banner/banner_item.dart';
@@ -23,7 +24,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<BannerItem> bannerList = [];
   List<WanArticle> articleList = [];
-  int curPage = -1;
+  int curPage = 0;
   bool hasMore = false;
 
   @override
@@ -46,10 +47,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   _loadArticles() async {
-    ArticleListWrapper result = await WanRepository().homePageArticle(++curPage);
+    // 服务端返回的curPage比实际请求连接的pageNo多1，因此直接使用服务端返回的结果，不自增
+    ArticleListWrapper result = await WanRepository().homePageArticle(curPage);
     setState(() {
       curPage = result.curPage;
-      articleList = result.datas;
+      articleList.addAll(result.datas);
       hasMore = !result.over;
     });
   }
@@ -85,9 +87,23 @@ class _HomePageState extends State<HomePage> {
             SliverList(
               // 大小设置成*2-1目的是增加分割线，见
               // https://stackoverflow.com/questions/57752853/separator-divider-in-sliverlist-flutter
+
+              // 后续增加1，以在尾部增加一个加载更多和数据提示
               delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index){
                     final int itemIndex = index ~/ 2;
+                    // 最尾部展示一个加载更多
+                    if(index == articleList.length * 2 - 1){
+                      return Container(
+                        child: FlatButton(
+                          child: Text(hasMore ? S.of(context).loadMore : S.of(context).noMoreData,
+                            style: TextStyle(color: Colors.grey),),
+                          onPressed: (){
+                            _loadArticles();
+                          },
+                        ),
+                      );
+                    }
                     if(index.isEven){
                       return Article(articleList[itemIndex]);
                     }
@@ -99,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                     }
                     return null;
                   },
-                  childCount: max(0, articleList.length * 2 - 1)
+                  childCount: max(0, articleList.length * 2 /*- 1*/)
               ),
             )
           ],

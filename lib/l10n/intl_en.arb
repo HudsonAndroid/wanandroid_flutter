@@ -1,5 +1,7 @@
 {
   "appName": "WanAndroid",
   "homePage": "Home",
-  "wechatPage": "WeChatArticle"
+  "wechatPage": "WeChatArticle",
+  "loadMore": "load more",
+  "noMoreData": "no more data"
 }

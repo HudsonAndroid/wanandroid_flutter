@@ -64,6 +64,26 @@ class S {
       args: [],
     );
   }
+
+  /// `load more`
+  String get loadMore {
+    return Intl.message(
+      'load more',
+      name: 'loadMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `no more data`
+  String get noMoreData {
+    return Intl.message(
+      'no more data',
+      name: 'noMoreData',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

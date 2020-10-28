@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static _notInlinedMessages(_) => <String, Function> {
     "appName" : MessageLookupByLibrary.simpleMessage("玩转安卓"),
     "homePage" : MessageLookupByLibrary.simpleMessage("首页"),
+    "loadMore" : MessageLookupByLibrary.simpleMessage("加载更多"),
+    "noMoreData" : MessageLookupByLibrary.simpleMessage("没有更多数据了"),
     "wechatPage" : MessageLookupByLibrary.simpleMessage("微信公众号")
   };
 }
