@@ -22,15 +22,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  ScrollController _controller;
   List<BannerItem> bannerList = [];
   List<WanArticle> articleList = [];
   int curPage = 0;
-  bool hasMore = false;
+  bool hasMore = true;
+
+  _scrollListener(){
+    if(_controller.offset >= _controller.position.maxScrollExtent &&
+      !_controller.position.outOfRange){// 到达底部
+      _loadArticles();// 自动加载更多
+    }
+  }
 
   @override
   void initState() {
     _loadBanners();
     _loadArticles();
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
     super.initState();
   }
 
@@ -47,6 +57,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _loadArticles() async {
+    if(!hasMore) return ;
     // 服务端返回的curPage比实际请求连接的pageNo多1，因此直接使用服务端返回的结果，不自增
     ArticleListWrapper result = await WanRepository().homePageArticle(curPage);
     setState(() {
@@ -59,18 +70,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
       body: Container(
         // Slivers实现，见https://medium.com/flutter/slivers-demystified-6ff68ab0296f
         child: CustomScrollView(
+          controller: _controller,
           slivers: <Widget>[
             SliverAppBar(
               title: Text(widget.title),
               floating: true,
               snap: true,
             ),
+            // Banner布局
             SliverList(
                 delegate: SliverChildListDelegate(
                     [
@@ -84,6 +94,7 @@ class _HomePageState extends State<HomePage> {
                     ]
                 )
             ),
+            // 文章列表布局
             SliverList(
               // 大小设置成*2-1目的是增加分割线，见
               // https://stackoverflow.com/questions/57752853/separator-divider-in-sliverlist-flutter
