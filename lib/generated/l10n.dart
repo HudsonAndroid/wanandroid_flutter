@@ -84,6 +84,36 @@ class S {
       args: [],
     );
   }
+
+  /// `ask`
+  String get sideMenuAsk {
+    return Intl.message(
+      'ask',
+      name: 'sideMenuAsk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `square`
+  String get sideMenuSquare {
+    return Intl.message(
+      'square',
+      name: 'sideMenuSquare',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `settings`
+  String get sideMenuSettings {
+    return Intl.message(
+      'settings',
+      name: 'sideMenuSettings',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

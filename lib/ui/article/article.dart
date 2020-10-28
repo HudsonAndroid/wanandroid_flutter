@@ -17,6 +17,7 @@ class Article extends StatefulWidget {
 
 /// 文章列表的一项
 class ArticleState extends State<Article> {
+  bool isStared = false;
 
   /// 创建文章图片
   Widget buildIcon(String imgLink) {
@@ -93,10 +94,29 @@ class ArticleState extends State<Article> {
                     defaultTextStyle: TextStyle(fontSize: 16.0, color: Colors.black),
                   ),
                   // 分类部分
-                  Html(
-                    padding: EdgeInsets.fromLTRB(6.0, 5.0, 6.0, 5.0),
-                    data: widget._article.superChapterName + "/" + widget._article.chapterName,
-                    defaultTextStyle: TextStyle(fontSize: 13.0, color: Colors.grey),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        child: Html(
+                          padding: EdgeInsets.fromLTRB(6.0, 5.0, 6.0, 5.0),
+                          data: widget._article.superChapterName + "/" + widget._article.chapterName,
+                          defaultTextStyle: TextStyle(fontSize: 13.0, color: Colors.grey),
+                        ),
+                        width: 250,
+                      ),
+                      Expanded(child: SizedBox()),
+                      IconButton(
+                        icon: Icon(
+                          isStared ? Icons.favorite : Icons.favorite_border,
+                          color: isStared ? Colors.red : Colors.grey,),
+                        onPressed: () {
+                          setState(() {
+                            isStared = !isStared;
+                          });
+                        },
+                      )
+
+                    ],
                   )
                 ],
               ),

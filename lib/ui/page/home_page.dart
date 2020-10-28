@@ -10,6 +10,7 @@ import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/entity/wan_banner.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/ui/article/article.dart';
+import 'package:wanandroid_flutter/ui/drawer/nav_drawer.dart';
 
 /// 首页
 class HomePage extends StatefulWidget {
@@ -70,6 +71,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
       body: Container(
         // Slivers实现，见https://medium.com/flutter/slivers-demystified-6ff68ab0296f
         child: CustomScrollView(

@@ -3,5 +3,8 @@
   "homePage": "Home",
   "wechatPage": "WeChatArticle",
   "loadMore": "load more",
-  "noMoreData": "no more data"
+  "noMoreData": "no more data",
+  "sideMenuAsk": "ask",
+  "sideMenuSquare": "square",
+  "sideMenuSettings": "settings"
 }

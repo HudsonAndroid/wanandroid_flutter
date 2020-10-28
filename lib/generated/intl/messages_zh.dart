@@ -25,6 +25,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "homePage" : MessageLookupByLibrary.simpleMessage("首页"),
     "loadMore" : MessageLookupByLibrary.simpleMessage("加载更多"),
     "noMoreData" : MessageLookupByLibrary.simpleMessage("没有更多数据了"),
+    "sideMenuAsk" : MessageLookupByLibrary.simpleMessage("问答"),
+    "sideMenuSettings" : MessageLookupByLibrary.simpleMessage("设置"),
+    "sideMenuSquare" : MessageLookupByLibrary.simpleMessage("广场"),
     "wechatPage" : MessageLookupByLibrary.simpleMessage("微信公众号")
   };
 }
