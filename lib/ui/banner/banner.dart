@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'package:wanandroid_flutter/banner/banner_item.dart';
+import 'package:wanandroid_flutter/ui/banner/banner_item.dart';
 
 ///
 /// item点击

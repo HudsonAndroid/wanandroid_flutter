@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 /// 由于系统本身存在banner，因此和我们自定义的banner冲突，需要处理冲突
-import 'package:wanandroid_flutter/banner/banner.dart' as CustomBanner;
-import 'package:wanandroid_flutter/banner/banner_item.dart';
+import 'package:wanandroid_flutter/ui/banner/banner.dart' as CustomBanner;
+import 'package:wanandroid_flutter/ui/banner/banner_item.dart';
 import 'package:wanandroid_flutter/common/WebUtil.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/entity/wan_banner.dart';
