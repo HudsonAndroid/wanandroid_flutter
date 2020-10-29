@@ -22,6 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appName" : MessageLookupByLibrary.simpleMessage("玩转安卓"),
+    "flag_new" : MessageLookupByLibrary.simpleMessage("新"),
+    "flag_top" : MessageLookupByLibrary.simpleMessage("置顶"),
     "homePage" : MessageLookupByLibrary.simpleMessage("首页"),
     "loadMore" : MessageLookupByLibrary.simpleMessage("加载更多"),
     "noMoreData" : MessageLookupByLibrary.simpleMessage("没有更多数据了"),

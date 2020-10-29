@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:wanandroid_flutter/common/WebUtil.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
+import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/common/round_rectangle.dart';
 
 class Article extends StatefulWidget {
@@ -37,7 +38,7 @@ class ArticleState extends State<Article> {
   /// 决定是否创建新文章标识
   Widget buildNewFlag(bool isNew){
     if(isNew){
-      return RoundRectangle(radius: 6.0, color: Colors.red, text: '新');
+      return RoundRectangle(radius: 6.0, color: Colors.red, text: S.of(context).flag_new);
     }
     return Container();
   }
@@ -45,7 +46,7 @@ class ArticleState extends State<Article> {
   /// 决定是否创建置顶标识
   Widget buildTopFlag(bool isTop){
     if(isTop){
-      return RoundRectangle(radius: 6.0, color: Colors.purple, text: '置顶',);
+      return RoundRectangle(radius: 6.0, color: Colors.purple, text: S.of(context).flag_top,);
     }
     return Container();
   }

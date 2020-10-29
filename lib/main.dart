@@ -1,7 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:wanandroid_flutter/ui/drawer/nav_drawer.dart';
 import 'package:wanandroid_flutter/ui/page/home_page.dart';
+// import 'package:wanandroid_flutter/ui/page/home_page_deprecated.dart';
 import 'package:wanandroid_flutter/ui/page/wechat_page.dart';
 import 'generated/l10n.dart';
 
@@ -19,7 +22,11 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+        // SmartRefresher的语言库，该库配置说明见 [RefreshLocalizations] 文件说明
+        RefreshLocalizations.delegate
       ],
+      // 此处由于我们APP整体配置已经配置了zh和en的语言类型，
+      // 因此针对SmartRefresher的不需要重复配置
       supportedLocales: S.delegate.supportedLocales,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -43,7 +50,15 @@ class _PageContainerState extends State<PageContainer> {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> title = [
+      S.of(context).homePage,
+      S.of(context).wechatPage
+    ];
     return Scaffold(
+      drawer: NavDrawer(),
+      appBar: AppBar(
+        title: Text(title[currentIndex]),
+      ),
       // 底部切换栏
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index){
@@ -56,17 +71,18 @@ class _PageContainerState extends State<PageContainer> {
           // 配置图标
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text(S.of(context).homePage)
+            title: Text(title[0])
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
-            title: Text(S.of(context).wechatPage)
+            title: Text(title[1])
           )
         ],
       ),
       body: IndexedStack(
         children: <Widget>[
-          HomePage(title: S.of(context).homePage),
+          // HomePageDeprecated(title: S.of(context).homePage),
+          HomePage(),
           WechatPage(title: S.of(context).wechatPage,)
         ],
         index: currentIndex,

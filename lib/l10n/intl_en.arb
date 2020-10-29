@@ -6,5 +6,7 @@
   "noMoreData": "no more data",
   "sideMenuAsk": "ask",
   "sideMenuSquare": "square",
-  "sideMenuSettings": "settings"
+  "sideMenuSettings": "settings",
+  "flag_new": "new",
+  "flag_top": "top"
 }

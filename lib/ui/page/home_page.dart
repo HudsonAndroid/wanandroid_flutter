@@ -1,47 +1,38 @@
+
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:wanandroid_flutter/generated/l10n.dart';
-/// 由于系统本身存在banner，因此和我们自定义的banner冲突，需要处理冲突
-import 'package:wanandroid_flutter/ui/banner/banner.dart' as CustomBanner;
-import 'package:wanandroid_flutter/ui/banner/banner_item.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wanandroid_flutter/common/WebUtil.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/entity/wan_banner.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/ui/article/article.dart';
-import 'package:wanandroid_flutter/ui/drawer/nav_drawer.dart';
+import 'package:wanandroid_flutter/ui/banner/banner_item.dart';
+import 'package:wanandroid_flutter/ui/common/page_wrapper.dart';
+/// 由于系统本身存在banner，因此和我们自定义的banner冲突，需要处理冲突
+import 'package:wanandroid_flutter/ui/banner/banner.dart' as CustomBanner;
 
-/// 首页
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<StatefulWidget> createState() => _HomePageState();
+
 }
 
-class _HomePageState extends State<HomePage> {
-  ScrollController _controller;
+class _HomePageState extends State<HomePage>{
+  RefreshController _refreshController;
   List<BannerItem> bannerList = [];
   List<WanArticle> articleList = [];
   int curPage = 0;
   bool hasMore = true;
 
-  _scrollListener(){
-    if(_controller.offset >= _controller.position.maxScrollExtent &&
-      !_controller.position.outOfRange){// 到达底部
-      _loadArticles();// 自动加载更多
-    }
-  }
-
   @override
   void initState() {
     _loadBanners();
     _loadArticles();
-    _controller = ScrollController();
-    _controller.addListener(_scrollListener);
+    _refreshController = RefreshController();
     super.initState();
   }
 
@@ -66,74 +57,69 @@ class _HomePageState extends State<HomePage> {
       articleList.addAll(result.datas);
       hasMore = !result.over;
     });
+    if(hasMore){
+      _refreshController.loadComplete(); // 还有更多数据，仅通知完成本次加载
+    }else{
+      _refreshController.loadNoData(); // 没有更多数据，全部加载完成
+    }
+  }
+
+  _refresh() {
+    curPage = 0;
+    hasMore = true;
+    bannerList.clear();
+    articleList.clear();
+    _loadBanners();
+    _loadArticles();
+    _refreshController.refreshCompleted(); // 刷新完成
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: NavDrawer(),
-      body: Container(
-        // Slivers实现，见https://medium.com/flutter/slivers-demystified-6ff68ab0296f
-        child: CustomScrollView(
-          controller: _controller,
-          slivers: <Widget>[
-            SliverAppBar(
-              title: Text(widget.title),
-              floating: true,
-              snap: true,
+    return PageWrapper(
+      refreshController: _refreshController,
+      onRefresh: _refresh,
+      onLoading: _loadArticles,
+      child: CustomScrollView(
+        slivers: <Widget>[
+          // Banner布局
+          SliverList(
+              delegate: SliverChildListDelegate(
+                  [
+                    CustomBanner.Banner(
+                        bannerList,
+                        itemClickListener: (index, item){
+                          /// 点击跳转
+                          jumpWeb(item.jumpLink);
+                        }
+                    ),
+                  ]
+              )
+          ),
+          // 文章列表布局
+          SliverList(
+            // 大小设置成*2-1目的是增加分割线，见
+            // https://stackoverflow.com/questions/57752853/separator-divider-in-sliverlist-flutter
+            delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index){
+                  final int itemIndex = index ~/ 2;
+                  if(index.isEven){
+                    return Article(articleList[itemIndex]);
+                  }
+                  return Divider(height: 0, color: Colors.grey,);
+                },
+                semanticIndexCallback: (Widget widget, int localIndex){
+                  if(localIndex.isEven) {
+                    return localIndex ~/ 2;
+                  }
+                  return null;
+                },
+                childCount: max(0, articleList.length * 2 - 1)
             ),
-            // Banner布局
-            SliverList(
-                delegate: SliverChildListDelegate(
-                    [
-                      CustomBanner.Banner(
-                          bannerList,
-                          itemClickListener: (index, item){
-                            /// 点击跳转
-                            jumpWeb(item.jumpLink);
-                          }
-                      ),
-                    ]
-                )
-            ),
-            // 文章列表布局
-            SliverList(
-              // 大小设置成*2-1目的是增加分割线，见
-              // https://stackoverflow.com/questions/57752853/separator-divider-in-sliverlist-flutter
-
-              // 后续增加1，以在尾部增加一个加载更多和数据提示
-              delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index){
-                    final int itemIndex = index ~/ 2;
-                    // 最尾部展示一个加载更多
-                    if(index == articleList.length * 2 - 1){
-                      return Container(
-                        child: FlatButton(
-                          child: Text(hasMore ? S.of(context).loadMore : S.of(context).noMoreData,
-                            style: TextStyle(color: Colors.grey),),
-                          onPressed: (){
-                            _loadArticles();
-                          },
-                        ),
-                      );
-                    }
-                    if(index.isEven){
-                      return Article(articleList[itemIndex]);
-                    }
-                    return Divider(height: 0, color: Colors.grey,);
-                  },
-                  semanticIndexCallback: (Widget widget, int localIndex){
-                    if(localIndex.isEven) {
-                      return localIndex ~/ 2;
-                    }
-                    return null;
-                  },
-                  childCount: max(0, articleList.length * 2 /*- 1*/)
-              ),
-            )
-          ],
-        ),
-      ),
+          )
+        ],
+      )
     );
   }
+
 }

@@ -19,6 +19,18 @@ wanandroid flutter version
 
    增加新语言和其他操作，见插件介绍。
 
+## 性能优化
+在Flutter中由于存在大量的嵌套，导致代码可阅读性大大降低，同时增加代码混乱度。为此，我们经常想到的办法是将部分代码抽取出来
+作为一个方法或者函数，亦或者抽取成一个单独的类。然而在Flutter中，如果在StatefulWidget中把代码抽取成一个单独的方法，有可能
+造成不必要的重复构建，具体原因见[这篇文章](https://iiro.dev/2018/12/11/splitting-widgets-to-methods-performance-antipattern/),
+为此，我们需要把有状态的小部件中固定的代码抽取成一个StatelessWidget，并借助[const](https://stackoverflow.com/questions/21744677/how-does-the-const-constructor-actually-work)的构造方法（函数）以避免重复构建。
+
+## 刷新和加载更多组件
+系统为我们提供了RefreshIndicator来提供下拉刷新的功能，但一般情况下，我们列表页面还需要支持上拉加载更多的选项，因此选择了SmartRefresher。
+SmartRefresher新版本比旧版本优化了很多，例如旧版本中加载的文本提示都是英文的，需要我们重新配置以支持国际化，新版本中已经完全包含了国际化的
+处理（具体参考其内部源码的classic_indicator中逻辑包含有RefreshLocalizations）。不过，该库需要我们在APP根widget中配置语言信息，具体见
+main.dart和该库的refresh_localizations.dart说明。
+使用SmartRefresher后，列表加载到底部后，我们不再需要手动监听滑动到底部的事件了，直接使用SmartRefresher的onLoading来加载更多数据。
 ## Getting Started
 
 This project is a starting point for a Flutter application.

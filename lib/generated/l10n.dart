@@ -114,6 +114,26 @@ class S {
       args: [],
     );
   }
+
+  /// `new`
+  String get flag_new {
+    return Intl.message(
+      'new',
+      name: 'flag_new',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `top`
+  String get flag_top {
+    return Intl.message(
+      'top',
+      name: 'flag_top',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

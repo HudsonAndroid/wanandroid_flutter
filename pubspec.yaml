@@ -39,6 +39,10 @@ dependencies:
   # 国际化，见 https://plugins.jetbrains.com/plugin/13666-flutter-intl
   flutter_localizations:
     sdk: flutter
+  # 状态管理 最新版本见 https://pub.dev/packages/provider
+  provider: ^4.3.2+2
+  # 页面统一加载管理工具，支持下拉刷新和上拉加载更多，比系统自带的RefreshIndicator更好用，更适合列表型页面
+  pull_to_refresh: ^1.4.5
 
 dev_dependencies:
   flutter_test:

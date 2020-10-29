@@ -6,5 +6,7 @@
   "noMoreData": "没有更多数据了",
   "sideMenuAsk": "问答",
   "sideMenuSquare": "广场",
-  "sideMenuSettings": "设置"
+  "sideMenuSettings": "设置",
+  "flag_new": "新",
+  "flag_top": "置顶"
 }

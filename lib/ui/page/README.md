@@ -7,5 +7,7 @@
 
 [加载更多方案](https://karthikponnam.medium.com/flutter-loadmore-in-listview-23820612907d)
 
+### 注意：在后续优化改造中，使用SmartRefresher统一了所有加载页面，因此监听滑动到底部的加载更多方案已经弃用。不过在代码中保留了实现逻辑。
+
 ## 侧边栏
 见[这篇文章](https://medium.com/@maffan/how-to-create-a-side-menu-in-flutter-a2df7833fdfb)

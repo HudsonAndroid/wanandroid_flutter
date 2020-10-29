@@ -22,6 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appName" : MessageLookupByLibrary.simpleMessage("WanAndroid"),
+    "flag_new" : MessageLookupByLibrary.simpleMessage("new"),
+    "flag_top" : MessageLookupByLibrary.simpleMessage("top"),
     "homePage" : MessageLookupByLibrary.simpleMessage("Home"),
     "loadMore" : MessageLookupByLibrary.simpleMessage("load more"),
     "noMoreData" : MessageLookupByLibrary.simpleMessage("no more data"),
