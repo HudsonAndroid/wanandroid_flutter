@@ -134,6 +134,16 @@ class S {
       args: [],
     );
   }
+
+  /// `load failed, click me to retry`
+  String get tips_error_retry {
+    return Intl.message(
+      'load failed, click me to retry',
+      name: 'tips_error_retry',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

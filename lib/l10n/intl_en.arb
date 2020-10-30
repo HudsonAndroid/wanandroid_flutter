@@ -8,5 +8,6 @@
   "sideMenuSquare": "square",
   "sideMenuSettings": "settings",
   "flag_new": "new",
-  "flag_top": "top"
+  "flag_top": "top",
+  "tips_error_retry": "load failed, click me to retry"
 }

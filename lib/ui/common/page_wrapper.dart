@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/page/home_page.dart';
 
 /// 页面统一抽象页
@@ -13,14 +14,19 @@ class PageWrapper extends StatefulWidget {
   final VoidCallback onRefresh;
   final VoidCallback onLoading;
   final Widget child;
+  final LoadState loadState;
 
   PageWrapper({
     Key key,
     @required this.refreshController,
     this.onRefresh,
     this.onLoading,
-    this.child
-  }): super(key: key);
+    this.child,
+    AsyncSnapshot snapshot,
+    bool isLoadMore
+  }):
+    loadState = analyseLoadState(snapshot, isLoadMore),
+    super(key: key);
 
   @override
   State<StatefulWidget> createState() => _PageWrapperState();
@@ -41,10 +47,63 @@ class _PageWrapperState extends State<PageWrapper> {
             onLoading: widget.onLoading,
             child: widget.child,
             enablePullUp: true, // 允许上拉刷新
-          )
+          ),
+          // 注意先后顺序，放前面的话，点击事件无法触发
+          _LoadStateIndicator(widget.loadState, refreshOpt: widget.onRefresh,),
         ],
       ),
     );
   }
+}
 
+class _LoadStateIndicator extends StatelessWidget {
+  final LoadState loadState;
+  final Function refreshOpt;
+
+  _LoadStateIndicator(this.loadState, {Key key, this.refreshOpt}): super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    switch(loadState){
+      case LoadState.loading:
+        return Container(
+          alignment: Alignment.center,
+          child: CircularProgressIndicator(),
+        );
+      case LoadState.failed:
+        // 外面包裹一层container，以居中和覆盖内容部分
+        return Container(
+          width: double.infinity,
+          color: Colors.white,
+          child: InkWell(
+            onTap: refreshOpt,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.mood_bad),
+                Text(S.of(context).tips_error_retry)
+              ],
+            ),
+          ),
+        );
+      default:
+        return Container();
+    }
+  }
+}
+
+enum LoadState {
+  loading,
+  success,
+  failed,
+  none
+}
+
+LoadState analyseLoadState(AsyncSnapshot snapshot, bool isLoadMore){
+  return !isLoadMore ? snapshot.connectionState == ConnectionState.done
+                      ? snapshot.hasData
+                          ? LoadState.success
+                          : LoadState.failed
+                      : LoadState.loading
+                    : LoadState.none;
 }

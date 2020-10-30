@@ -8,5 +8,6 @@
   "sideMenuSquare": "广场",
   "sideMenuSettings": "设置",
   "flag_new": "新",
-  "flag_top": "置顶"
+  "flag_top": "置顶",
+  "tips_error_retry": "加载出错了,点我重试"
 }

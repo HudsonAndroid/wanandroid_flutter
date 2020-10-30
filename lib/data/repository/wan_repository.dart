@@ -24,7 +24,7 @@ class WanRepository {
     return new Future.error('error, the reason is ${response.statusCode}');
   }
 
-  Future<List<WanArticle>> topArticle() async {
+  Future<List<WanArticle>> _topArticle() async {
     var response = await Dio().get(Api.TOP_ARTICLE);
     if(response.statusCode == HttpStatus.ok){
       return TopArticle.fromJson(jsonDecode(response.toString())).data;
@@ -38,7 +38,7 @@ class WanRepository {
     List<WanArticle> preList;
     if(pageNo == 0){
       // 需要获取置顶文章
-      preList = await topArticle();
+      preList = await _topArticle();
     }
     var response = await Dio().get(Api.HOME_ARTICLE.replaceAll('{pageNo}', pageNo.toString()));
     if(response.statusCode == HttpStatus.ok){

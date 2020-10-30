@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sideMenuAsk" : MessageLookupByLibrary.simpleMessage("ask"),
     "sideMenuSettings" : MessageLookupByLibrary.simpleMessage("settings"),
     "sideMenuSquare" : MessageLookupByLibrary.simpleMessage("square"),
+    "tips_error_retry" : MessageLookupByLibrary.simpleMessage("load failed, click me to retry"),
     "wechatPage" : MessageLookupByLibrary.simpleMessage("WeChatArticle")
   };
 }
