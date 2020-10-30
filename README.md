@@ -6,8 +6,6 @@ wanandroid flutter version
 
 ## 嵌套滚动型Widget处理方案（首页）
 利用Slivers完成，相关信息见[medium的这篇文章](https://medium.com/flutter/slivers-demystified-6ff68ab0296f)
-## 加载更多方案（首页）
-与其他语言方案类似，具体见[内部介绍](/lib/ui/page)
 
 ## 国际化
 国际化使用了[Flutter Intl](https://plugins.jetbrains.com/plugin/13666-flutter-intl) 插件，详情见插件介绍和使用方法。
@@ -27,10 +25,14 @@ wanandroid flutter version
 
 ## 刷新和加载更多组件
 系统为我们提供了RefreshIndicator来提供下拉刷新的功能，但一般情况下，我们列表页面还需要支持上拉加载更多的选项，因此选择了SmartRefresher。
+（备注：代码中保留了通过监听列表底部来触发加载更多的逻辑代码，见[HomePageDeprecated](/lib/ui/page/home_page_deprecated.dart) ）
 SmartRefresher新版本比旧版本优化了很多，例如旧版本中加载的文本提示都是英文的，需要我们重新配置以支持国际化，新版本中已经完全包含了国际化的
 处理（具体参考其内部源码的classic_indicator中逻辑包含有RefreshLocalizations）。不过，该库需要我们在APP根widget中配置语言信息，具体见
 main.dart和该库的refresh_localizations.dart说明。
 使用SmartRefresher后，列表加载到底部后，我们不再需要手动监听滑动到底部的事件了，直接使用SmartRefresher的onLoading来加载更多数据。
+代码中的经典示例见[统一加载刷新页面](/lib/ui/common/page_wrapper.dart)和具体实现[HomePage](/lib/ui/page/home_page.dart)。
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
