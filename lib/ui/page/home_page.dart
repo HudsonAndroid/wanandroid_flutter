@@ -22,6 +22,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>{
+  static const int START_PAGE = 1;
   RefreshController _refreshController;
   List<BannerItem> bannerList = [];
   List<WanArticle> articleList = [];
@@ -54,8 +55,9 @@ class _HomePageState extends State<HomePage>{
     curPage = 0;
     hasMore = true;
     isLoadMore = false;
-    bannerList.clear();
-    articleList.clear();
+    // cannot clear old at here, because old future request result will append the list
+//    bannerList.clear();
+//    articleList.clear();
     setState(() {});
   }
 
@@ -85,6 +87,10 @@ class _HomePageState extends State<HomePage>{
             result = snapshot.data[0];
           }
           curPage = result.curPage;
+          if(curPage == START_PAGE){
+            // if it's first page, we should clear old list, maybe it was invoked by refresh opt.
+            articleList.clear();
+          }
           articleList.addAll(result.datas);
           hasMore = !result.over;
           _refreshController.refreshCompleted(); // 控制下拉， 刷新完成

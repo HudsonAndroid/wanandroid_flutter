@@ -46,6 +46,32 @@ main.dart和该库的refresh_localizations.dart说明。
 解决方案：
 见[这里](https://stackoverflow.com/questions/50626949/can-i-use-multiple-method-on-a-future-builder)。
 在[首页](/lib/ui/page/home_page.dart)也是通过这种方式实现的。
+
+
+
+## 其他问题
+#### 项目报错，提示网络错误
+项目跑起来报错，提示网络问题，类似如下报错：
+
+    Exception in thread "main" java.net.ConnectException: Connection timed out (Connection timed out)
+
+这种情况下，我们最好通过命令行的方式并带日志运行，以查看全面的日志信息，执行 flutter run -v 命令。我实际开发过程中
+遇到的错误是提示gradle下载失败（这点不得不吐槽下，通过普通run的方式根本看不出来是什么导致的错误，普通run的错误日志毫无意义）。
+这种情况下（gradle下载失败），可以尝试以下方法：
+
+手动下载（[下载地址](https://gradle.org/releases/)），然后把android module中的gradle文件夹下gradle-wrapper.properties
+的distributionUrl替换成我们下载下来的zip包的路径，例如下面我下载在e盘目录下，修改为对应地址。
+
+     distributionBase=GRADLE_USER_HOME
+     distributionPath=wrapper/dists
+     zipStoreBase=GRADLE_USER_HOME
+     zipStorePath=wrapper/dists
+     distributionUrl=file\:///E:/ProgramFile/androidstudio/gradle/gradle-5.6.4-all.zip
+
+重新运行，flutter命令行会自动帮我们解压结果（注意我们手动解压不行，因为有hash值，所以让flutter帮我们解压，它会解压在c盘
+的对应user的.gradle目录下，由哈希值命名的文件夹内部就是了），这样我们才能正常运行起来。
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

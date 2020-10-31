@@ -100,6 +100,7 @@ enum LoadState {
 }
 
 LoadState analyseLoadState(AsyncSnapshot snapshot, bool isLoadMore){
+  if(snapshot == null || isLoadMore == null) return LoadState.none;
   return !isLoadMore ? snapshot.connectionState == ConnectionState.done
                       ? snapshot.hasData
                           ? LoadState.success
