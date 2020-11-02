@@ -33,17 +33,25 @@ main.dart和该库的refresh_localizations.dart说明。
 代码中的经典示例见[统一加载刷新页面](/lib/ui/common/page_wrapper.dart)和具体实现[HomePage](/lib/ui/page/home_page.dart)。
 
 ## 异步加载状态的显示
+
 问题产生的原因：
+
 在像Android中，我们可以监听网络请求的状态，并给用户显示当前状态，且在失败的情况下给予重试方案，以给用户更好的体验。那么在Flutter中该如何监听
 数据请求的状态？
+
 解决方案：
+
 使用FutureBuilder或StreamBuilder。前者针对仅监听一次即结束的数据请求，可以参考[这篇文章](https://medium.com/flutterpub/network-call-with-progress-error-retry-in-flutter-8b58585f0b26);
 后者针对需要使用[Stream](https://juejin.im/post/6844903686737494023)的情况下的对应监听方案，例如我们监听位置变化时，我们需要持续获取位置信息，而不是一次性就结束。
 两者更多的区别见[StackOverFlow这里的解释](https://stackoverflow.com/questions/50844519/flutter-streambuilder-vs-futurebuilder)。
+
 随之产生的问题：
+
 从FutureBuilder的[使用](https://medium.com/flutterpub/network-call-with-progress-error-retry-in-flutter-8b58585f0b26)可以看出future属性仅能接受一个
 异步方法，如果一个Widget存在多个请求该如何处理？
+
 解决方案：
+
 见[这里](https://stackoverflow.com/questions/50626949/can-i-use-multiple-method-on-a-future-builder)。
 在[首页](/lib/ui/page/home_page.dart)也是通过这种方式实现的。
 
