@@ -21,6 +21,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "action_input_password" : MessageLookupByLibrary.simpleMessage("请输入密码"),
+    "action_input_user_name" : MessageLookupByLibrary.simpleMessage("请输入用户名"),
+    "action_login" : MessageLookupByLibrary.simpleMessage("登录"),
     "appName" : MessageLookupByLibrary.simpleMessage("玩转安卓"),
     "flag_new" : MessageLookupByLibrary.simpleMessage("新"),
     "flag_top" : MessageLookupByLibrary.simpleMessage("置顶"),
@@ -31,6 +34,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "sideMenuSettings" : MessageLookupByLibrary.simpleMessage("设置"),
     "sideMenuSquare" : MessageLookupByLibrary.simpleMessage("广场"),
     "tips_error_retry" : MessageLookupByLibrary.simpleMessage("加载出错了,点我重试"),
+    "tips_login_failed" : MessageLookupByLibrary.simpleMessage("登录失败，原因是"),
+    "tips_login_success" : MessageLookupByLibrary.simpleMessage("登录成功"),
+    "tips_need_login" : MessageLookupByLibrary.simpleMessage("请先登录"),
+    "tips_password_empty" : MessageLookupByLibrary.simpleMessage("密码不能为空"),
+    "tips_user_name_empty" : MessageLookupByLibrary.simpleMessage("用户名不能为空"),
     "wechatPage" : MessageLookupByLibrary.simpleMessage("微信公众号")
   };
 }

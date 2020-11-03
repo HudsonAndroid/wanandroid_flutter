@@ -43,6 +43,16 @@ dependencies:
   provider: ^4.3.2+2
   # 页面统一加载管理工具，支持下拉刷新和上拉加载更多，比系统自带的RefreshIndicator更好用，更适合列表型页面
   pull_to_refresh: ^1.4.5
+#  # 用于生成hash值
+#  quiver: ^2.1.4+1
+  # SharedPreferences配置工具
+  shared_preferences: ^0.5.12+2
+  # Cookie管理相关，见 https://pub.dev/packages/cookie_jar和 https://pub.dev/packages/dio_cookie_manager
+  # 使用请参考 https://zhuanlan.zhihu.com/p/102573706
+  cookie_jar: ^1.0.0
+  dio_cookie_manager: ^1.0.0
+  # 提供所在系统的文件存储路径的工具
+  path_provider: ^1.6.22
 
 dev_dependencies:
   flutter_test:

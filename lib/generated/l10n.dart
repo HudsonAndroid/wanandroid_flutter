@@ -144,6 +144,86 @@ class S {
       args: [],
     );
   }
+
+  /// `please login first`
+  String get tips_need_login {
+    return Intl.message(
+      'please login first',
+      name: 'tips_need_login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `login account`
+  String get action_login {
+    return Intl.message(
+      'login account',
+      name: 'action_login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please input user name`
+  String get action_input_user_name {
+    return Intl.message(
+      'please input user name',
+      name: 'action_input_user_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `user name cannot be empty`
+  String get tips_user_name_empty {
+    return Intl.message(
+      'user name cannot be empty',
+      name: 'tips_user_name_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please input account password`
+  String get action_input_password {
+    return Intl.message(
+      'please input account password',
+      name: 'action_input_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `password cannot be empty`
+  String get tips_password_empty {
+    return Intl.message(
+      'password cannot be empty',
+      name: 'tips_password_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `login success`
+  String get tips_login_success {
+    return Intl.message(
+      'login success',
+      name: 'tips_login_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `login failed, the reason is `
+  String get tips_login_failed {
+    return Intl.message(
+      'login failed, the reason is ',
+      name: 'tips_login_failed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

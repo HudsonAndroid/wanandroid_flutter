@@ -6,4 +6,8 @@ class BaseResult {
   String errorMsg;
 
   bool isSuccess() => errorCode == Api.SUCCESS;
+
+  BaseResult.fromJson(Map<String, dynamic> json)
+    : errorCode = json['errorCode'],
+      errorMsg = json['errorMsg'];
 }

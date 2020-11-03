@@ -9,5 +9,13 @@
   "sideMenuSettings": "设置",
   "flag_new": "新",
   "flag_top": "置顶",
-  "tips_error_retry": "加载出错了,点我重试"
+  "tips_error_retry": "加载出错了,点我重试",
+  "tips_need_login": "请先登录",
+  "action_login": "登录",
+  "action_input_user_name": "请输入用户名",
+  "tips_user_name_empty": "用户名不能为空",
+  "action_input_password": "请输入密码",
+  "tips_password_empty": "密码不能为空",
+  "tips_login_success": "登录成功",
+  "tips_login_failed": "登录失败，原因是"
 }

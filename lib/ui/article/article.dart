@@ -1,11 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:wanandroid_flutter/common/WebUtil.dart';
+import 'package:wanandroid_flutter/common/state/account_provider.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/common/round_rectangle.dart';
+import 'package:wanandroid_flutter/ui/page/login_page.dart';
 
 class Article extends StatefulWidget {
   final WanArticle _article;
@@ -60,6 +63,7 @@ class ArticleState extends State<Article> {
 
   @override
   Widget build(BuildContext context) {
+    final accountModel =  Provider.of<AccountProvider>(context);
     return InkWell(
       onTap: (){
         // 直接跳转到指定网页
@@ -108,15 +112,21 @@ class ArticleState extends State<Article> {
                       Expanded(child: SizedBox()),
                       IconButton(
                         icon: Icon(
-                          isStared ? Icons.favorite : Icons.favorite_border,
-                          color: isStared ? Colors.red : Colors.grey,),
+                          widget._article.collect ? Icons.favorite : Icons.favorite_border,
+                          color: widget._article.collect ? Colors.red : Colors.grey,),
                         onPressed: () {
-                          setState(() {
-                            isStared = !isStared;
-                          });
+                          if(accountModel.isLogin()){
+                            setState(() {
+                              isStared = !isStared;
+                            });
+                          }else{
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                            // Scaffold.of(context).showSnackBar(SnackBar(
+                            //   content: Text(S.of(context).tips_need_login),
+                            // ));
+                          }
                         },
                       )
-
                     ],
                   )
                 ],

@@ -21,6 +21,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "action_input_password" : MessageLookupByLibrary.simpleMessage("please input account password"),
+    "action_input_user_name" : MessageLookupByLibrary.simpleMessage("please input user name"),
+    "action_login" : MessageLookupByLibrary.simpleMessage("login account"),
     "appName" : MessageLookupByLibrary.simpleMessage("WanAndroid"),
     "flag_new" : MessageLookupByLibrary.simpleMessage("new"),
     "flag_top" : MessageLookupByLibrary.simpleMessage("top"),
@@ -31,6 +34,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "sideMenuSettings" : MessageLookupByLibrary.simpleMessage("settings"),
     "sideMenuSquare" : MessageLookupByLibrary.simpleMessage("square"),
     "tips_error_retry" : MessageLookupByLibrary.simpleMessage("load failed, click me to retry"),
+    "tips_login_failed" : MessageLookupByLibrary.simpleMessage("login failed, the reason is "),
+    "tips_login_success" : MessageLookupByLibrary.simpleMessage("login success"),
+    "tips_need_login" : MessageLookupByLibrary.simpleMessage("please login first"),
+    "tips_password_empty" : MessageLookupByLibrary.simpleMessage("password cannot be empty"),
+    "tips_user_name_empty" : MessageLookupByLibrary.simpleMessage("user name cannot be empty"),
     "wechatPage" : MessageLookupByLibrary.simpleMessage("WeChatArticle")
   };
 }

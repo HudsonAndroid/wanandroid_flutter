@@ -28,5 +28,5 @@ class BannerWrapper extends BaseResult {
   List<WanBanner> data;
 
   BannerWrapper.fromJson(Map<String, dynamic> json)
-    : data = List<WanBanner>.from(json['data'].map((x) => WanBanner.fromJson(x)));
+    : data = List<WanBanner>.from(json['data'].map((x) => WanBanner.fromJson(x))), super.fromJson(json);
 }

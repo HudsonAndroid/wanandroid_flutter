@@ -9,5 +9,13 @@
   "sideMenuSettings": "settings",
   "flag_new": "new",
   "flag_top": "top",
-  "tips_error_retry": "load failed, click me to retry"
+  "tips_error_retry": "load failed, click me to retry",
+  "tips_need_login": "please login first",
+  "action_login": "login account",
+  "action_input_user_name": "please input user name",
+  "tips_user_name_empty": "user name cannot be empty",
+  "action_input_password": "please input account password",
+  "tips_password_empty": "password cannot be empty",
+  "tips_login_success": "login success",
+  "tips_login_failed": "login failed, the reason is "
 }

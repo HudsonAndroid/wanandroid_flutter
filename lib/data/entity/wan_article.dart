@@ -1,6 +1,5 @@
 
 import 'dart:ffi';
-
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
 
 class WanArticle {
@@ -81,6 +80,17 @@ class WanArticle {
     'visible': visible,
     'zan': zan,
   };
+
+  // 用于判定集合中是否包含有WanArticle时只判断id即可（因为部分页面文章返回字段有多有少）
+  // 判定对象是否相等见https://stackoverflow.com/questions/29567322/how-does-a-set-determine-that-two-objects-are-equal-in-dart
+  @override
+  bool operator ==(Object other)
+    => other is WanArticle && id == other.id;
+
+  // 重写hashcode方法参考自 https://stackoverflow.com/questions/20577606/whats-a-good-recipe-for-overriding-hashcode-in-dart
+  // 由于这里只涉及一个参数，因此没有使用到
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class Tag {
@@ -98,19 +108,19 @@ class Tag {
 }
 
 // 置顶文章，服务器返回的结果
-class TopArticle {
+class TopArticle extends BaseResult{
   List<WanArticle> data;
 
   TopArticle.fromJson(Map<String, dynamic> json)
-      : data = List<WanArticle>.from(json['data'].map((x) => WanArticle.fromJson(x)));
+      : data = List<WanArticle>.from(json['data'].map((x) => WanArticle.fromJson(x))), super.fromJson(json);
 }
 
 // 一般情况服务器返回的文章列表，即外面还包裹了一层
-class ArticleResultWrapper {
+class ArticleResultWrapper extends BaseResult{
   ArticleListWrapper data;
 
   ArticleResultWrapper.fromJson(Map<String, dynamic> json)
-    : data = ArticleListWrapper.fromJson(json['data']);
+    : data = ArticleListWrapper.fromJson(json['data']), super.fromJson(json);
 }
 
 class ArticleListWrapper {
