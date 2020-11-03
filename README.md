@@ -55,7 +55,41 @@ main.dart和该库的refresh_localizations.dart说明。
 见[这里](https://stackoverflow.com/questions/50626949/can-i-use-multiple-method-on-a-future-builder)。
 在[首页](/lib/ui/page/home_page.dart)也是通过这种方式实现的。
 
+## 状态管理-Provider
+用户收藏的文章列表需要在各个列表页面都有影响（是否标记为红心文章），因此需要提供一个全局的状态信息管理者（注意：并不是所有的状态都适合作为全局存在），
+这里状态管理使用官方推荐的[Provider](https://pub.dev/packages/provider)。
 
+Provider可以说是InheritedWidget的一种升级，是保证简洁化向子Widget传递且能够更好管理的状态管理方案。关于它的使用和好处，请参考下面文章：
+
+[Flutter使用的简单示例](https://medium.com/flutterdevs/managing-the-state-of-a-widget-using-provider-flutter-6b5090f18875)
+
+[Flutter中的全局访问和范围访问](https://medium.com/coding-with-flutter/flutter-global-access-vs-scoped-access-with-provider-8d6b94393bdf)
+
+[官方文档相关介绍](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple)
+
+[Flutter状态管理指南-Provider](https://juejin.im/post/6844903864852807694)。
+
+值得注意的是，Provider虽然可以全局管理状态，但是使用上面需要注意，我们不能在用户操作回调中调用获取Provider实例，否则将会报如下错误：
+
+    Tried to listen to a value exposed with provider, from outside of the widget tree.
+
+例如：
+
+    IconButton(
+        icon: Icon(Icons.favorite),
+        onPressed: () {
+          // error here
+          if(Provider.of<AccountProvider>(context).isLogin()){
+            setState(() {
+              isStared = !isStared;
+            });
+          }else{
+            // not login
+          }
+        },
+      )
+
+更多请参考[StackOverflow上这个回答](https://stackoverflow.com/questions/59898274/flutter-provider-access-via-addpostframecallback-says-widget-is-outside-the-widg)
 
 ## 其他问题
 #### 项目报错，提示网络错误
