@@ -224,6 +224,16 @@ class S {
       args: [],
     );
   }
+
+  /// `退出登录`
+  String get action_logout {
+    return Intl.message(
+      '退出登录',
+      name: 'action_logout',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

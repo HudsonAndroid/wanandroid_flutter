@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "action_input_password" : MessageLookupByLibrary.simpleMessage("please input account password"),
     "action_input_user_name" : MessageLookupByLibrary.simpleMessage("please input user name"),
     "action_login" : MessageLookupByLibrary.simpleMessage("login account"),
+    "action_logout" : MessageLookupByLibrary.simpleMessage("退出登录"),
     "appName" : MessageLookupByLibrary.simpleMessage("WanAndroid"),
     "flag_new" : MessageLookupByLibrary.simpleMessage("new"),
     "flag_top" : MessageLookupByLibrary.simpleMessage("top"),

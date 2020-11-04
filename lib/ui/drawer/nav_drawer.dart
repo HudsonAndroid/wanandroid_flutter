@@ -32,6 +32,13 @@ class NavDrawer extends StatelessWidget {
             title: Text(S.of(context).sideMenuSettings),
             onTap: () => {Navigator.of(context).pop()},
           ),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text(S.of(context).action_logout),
+            onTap: () => {
+
+            },
+          )
         ],
       ),
     );

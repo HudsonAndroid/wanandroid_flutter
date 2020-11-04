@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "action_input_password" : MessageLookupByLibrary.simpleMessage("请输入密码"),
     "action_input_user_name" : MessageLookupByLibrary.simpleMessage("请输入用户名"),
     "action_login" : MessageLookupByLibrary.simpleMessage("登录"),
+    "action_logout" : MessageLookupByLibrary.simpleMessage("退出登录"),
     "appName" : MessageLookupByLibrary.simpleMessage("玩转安卓"),
     "flag_new" : MessageLookupByLibrary.simpleMessage("新"),
     "flag_top" : MessageLookupByLibrary.simpleMessage("置顶"),

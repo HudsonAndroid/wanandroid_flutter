@@ -17,5 +17,6 @@
   "action_input_password": "please input account password",
   "tips_password_empty": "password cannot be empty",
   "tips_login_success": "login success",
-  "tips_login_failed": "login failed, the reason is "
+  "tips_login_failed": "login failed, the reason is ",
+  "action_logout": "logout"
 }
