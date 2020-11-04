@@ -23,9 +23,13 @@ class AccountProvider with ChangeNotifier {
     }
   }
 
-  changeCurrentUser(UserInfo newUser){
+  changeCurrentUser(UserInfo newUser) async{
     userInfo = newUser;
     notifyListeners();
+    // save cache
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // if newUser is null, will clean the cache
+    prefs.setString(KEY_LOGIN_CACHE, jsonEncode(newUser.toJson()));
   }
 
   isLogin() => userInfo != null;

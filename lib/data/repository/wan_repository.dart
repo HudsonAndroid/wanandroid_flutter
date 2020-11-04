@@ -18,6 +18,52 @@ class Api {
   static const String LOGIN = "https://www.wanandroid.com/user/login";
 }
 
+// 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
+// 而且如果客户端请求使用了旧的会话id，返回的数据是没有任何变动的（即使用户收藏了某篇文章，即collect变成true; 或者反向操作），
+// 因此有必要避免使用旧的会话id，以获取最新数据
+// 所以自定义CookieManager逻辑
+class MyCookieManager extends CookieManager{
+  MyCookieManager(CookieJar cookieJar): super(cookieJar);
+
+  @override
+  Future onResponse(Response response) async => _saveCookies(response);
+
+  @override
+  Future onError(DioError err) async => _saveCookies(err.response);
+
+  _saveCookies(Response response) {
+    if (response != null && response.headers != null) {
+      List<String> cookies = response.headers[HttpHeaders.setCookieHeader];
+      if (cookies != null) {
+        cookies = _removeSessionId(cookies);
+        List<Cookie> cookiesList = cookies.map((str)  {
+          return Cookie.fromSetCookieValue(str);
+        }).toList();
+        cookieJar.saveFromResponse(
+          response.request.uri,
+          cookiesList,
+        );
+      }
+    }
+  }
+
+  // 移除会话的SessionId，以使服务器创建一个新的会话，原因是如果使用旧的，会导致用户的操作（例如收藏）不会同步过来
+  // 经过测试验证，由于服务端每次请求都会创建一个SessionId，而如果一直使用同一个SessionId，重新获取数据时用户操作
+  // 将不会同步（服务端返回的数据还是旧数据）可能这是服务端的一个问题。
+  // 因此，由客户端控制，禁用SessionId。
+  List<String> _removeSessionId(List<String> cookies) {
+    int index = 0;
+    for(int i = 0; i < cookies.length; i++){
+      if(cookies[i].contains('JSESSIONID')){
+        index = i;
+        break;
+      }
+    }
+    cookies.removeAt(index);
+    return cookies;
+  }
+}
+
 class WanRepository {
   static PersistCookieJar _cookieJar;
   static Dio _dio;
@@ -36,16 +82,20 @@ class WanRepository {
   Future<Dio> get dio async {
     if(_dio == null) {
       _dio = Dio();
-      _dio.interceptors.add(CookieManager(await cookieJar));
+      _dio.interceptors.add(MyCookieManager(await cookieJar));
       // 网络请求日志监听器，建议正式环境关闭
-      _dio.interceptors.add(LogInterceptor());
+      _dio.interceptors.add(LogInterceptor(responseHeader: false));
     }
     return _dio;
   }
 
   // 异步方法会把结果包装成Future返回
+  // 备注：这里把dio实例使用新建的实例访问，原因是使用_dio实例请求的情况下
+  // 会出现有banner, top article, home article同时请求，且中间有个
+  // top article的请求莫名出现返回的数据不是正常的用户数据（有收藏，返回没有收藏）的问题
+  // 因此Banner的请求更换成普通新实例(因为他不需要cookieJar信息)
   Future<List<WanBanner>> banner() async {
-    var response = await (await dio).get(Api.BANNER);
+    var response = await new Dio().get(Api.BANNER);
     // if the request occur exception, the following code won't run, so we needn't to check it's status
     return BannerWrapper.fromJson(jsonDecode(response.toString())).data;
     // if(response.statusCode == HttpStatus.ok){
@@ -66,11 +116,6 @@ class WanRepository {
       // 需要获取置顶文章
       preList = await _topArticle();
     }
-    // if(preList != null){
-    //   preList.forEach((element) {
-    //     print('是否收藏了${element.collect}  标题${element.title}');
-    //   });
-    // }
     var response = await (await dio).get(Api.HOME_ARTICLE.replaceAll('{pageNo}', pageNo.toString()));
     ArticleResultWrapper resultWrapper = ArticleResultWrapper.fromJson(jsonDecode(response.toString()));
     if(preList != null){

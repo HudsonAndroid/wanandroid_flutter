@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
 
 class LoginResult extends BaseResult{
@@ -35,4 +37,19 @@ class UserInfo {
     token = json['token'],
     type = json['type'],
     username = json['username'];
+
+  Map<String, dynamic> toJson() => {
+    'admin': admin,
+    'coinCount': coinCount,
+    'collectIds': collectIds,
+    'email': email,
+    'icon': icon,
+    'id': id,
+    'nickname': nickname,
+    'password': password,
+    'publicName': publicName,
+    'token': token,
+    'type': type,
+    'username': username,
+  };
 }
