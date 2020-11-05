@@ -18,5 +18,11 @@
   "tips_password_empty": "密码不能为空",
   "tips_login_success": "登录成功",
   "tips_login_failed": "登录失败，原因是",
-  "action_logout": "退出登录"
+  "action_logout": "退出登录",
+  "tips_logout_failed": "退出登录失败",
+  "tips_no_account": "没有账号，去注册",
+  "action_register": "注册",
+  "tips_confirm_password": "请确认密码",
+  "tips_register_success": "注册成功",
+  "tips_register_failed": "注册失败"
 }

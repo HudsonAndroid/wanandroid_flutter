@@ -6,6 +6,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:wanandroid_flutter/data/entity/base_result.dart';
 import 'package:wanandroid_flutter/data/entity/user_info.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/entity/wan_banner.dart';
@@ -16,6 +17,8 @@ class Api {
   static const String TOP_ARTICLE = "https://www.wanandroid.com/article/top/json";
   static const String HOME_ARTICLE = "https://www.wanandroid.com/article/list/{pageNo}/json";
   static const String LOGIN = "https://www.wanandroid.com/user/login";
+  static const String LOGOUT = "https://www.wanandroid.com/user/logout/json";
+  static const String REGISTER = "https://www.wanandroid.com/user/register";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -133,5 +136,20 @@ class WanRepository {
     });
     var response = await (await dio).post(Api.LOGIN, data: formData);
     return LoginResult.fromJson(jsonDecode(response.toString()));
+  }
+
+  Future<BaseResult> logout() async {
+    var response = await (await dio).get(Api.LOGOUT);
+    return BaseResult.fromJson(jsonDecode(response.toString()));
+  }
+
+  Future<BaseResult> register(String userName, String password, String confirm) async {
+    FormData formData = FormData.fromMap({
+      "username": userName,
+      "password": password,
+      "repassword": confirm
+    });
+    var response = await (await dio).post(Api.REGISTER, data: formData);
+    return BaseResult.fromJson(jsonDecode(response.toString()));
   }
 }

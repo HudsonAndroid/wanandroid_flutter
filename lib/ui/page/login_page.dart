@@ -1,10 +1,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wanandroid_flutter/common/common_const_var.dart';
 import 'package:wanandroid_flutter/common/state/account_provider.dart';
 import 'package:wanandroid_flutter/data/entity/user_info.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/generated/l10n.dart';
+import 'package:wanandroid_flutter/ui/common/round_button.dart';
+import 'package:wanandroid_flutter/ui/common/span_text.dart';
+import 'package:wanandroid_flutter/ui/page/register_page.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -14,10 +19,31 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginState extends State<LoginPage> {
-  static const int _DURATION = 2000;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false; // 我们通过控制它来控制校验用户输入
+  // 注意： TextFormField的initialValue并不能通过setState来控制，
+  // 相关问题见 https://stackoverflow.com/questions/58053956/setstate-does-not-update-textformfield-when-use-initialvalue
+  // 解决方案见 https://stackoverflow.com/questions/59929329/why-does-the-initialvalue-not-update-and-display
+  // String _defaultUserName;
+  TextEditingController _userNameController = TextEditingController();
   String _userName, _password;
+  bool _obscurePwd = true; // 密码是否圆点显示
+
+  _initDefaultUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String defaultUser = prefs.getString(AccountProvider.KEY_LAST_LOGIN_USER);
+    // 获取上次登录成功的用户名，并自动填入
+    setState(() {
+      // _defaultUserName = defaultUser;
+      _userNameController.text = defaultUser;
+    });
+  }
+
+  @override
+  void initState() {
+    _initDefaultUserName();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +63,10 @@ class LoginState extends State<LoginPage> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
+                        controller: _userNameController,
+                        // initialValue: _defaultUserName,
                         decoration: InputDecoration(
+                          icon: Icon(Icons.person),
                             labelText: S.of(context).action_input_user_name
                         ),
                         validator: (content) => content.length == 0 ? S.of(context).tips_user_name_empty : null,
@@ -48,21 +77,43 @@ class LoginState extends State<LoginPage> {
                       SizedBox(height: 30,),
                       TextFormField(
                         decoration: InputDecoration(
-                            labelText: S.of(context).action_input_password
+                          icon: Icon(Icons.lock),
+                          labelText: S.of(context).action_input_password,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePwd
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePwd = !_obscurePwd;
+                              });
+                            },
+                          )
                         ),
-                        obscureText: true,
+                        obscureText: _obscurePwd,
                         validator: (content) => content.length == 0 ? S.of(context).tips_password_empty : null,
                         onSaved: (value){
                           _password = value;
                         },
                       ),
                       SizedBox(height: 50,),
-                      // SeparateButton(onPress: _validateInput,)
-                      RaisedButton(
+                      // 登录按钮部分
+                      RoundButton(
                         onPressed: (){
                           _validateInput(context, accountModel);
                         },
-                        child: Text(S.of(context).action_login),
+                        text: S.of(context).action_login,
+                      ),
+                      SpanText(
+                        margin: EdgeInsets.only(top: 20),
+                        onTap: (){
+                          _goToRegister();
+                        },
+                        total: S.of(context).tips_no_account,
+                        span: S.of(context).action_register,
                       )
                     ],
                   ),
@@ -71,6 +122,14 @@ class LoginState extends State<LoginPage> {
             ),
       )
     );
+  }
+
+  _goToRegister() async {
+    var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+    // 获取注册完成的用户名，并自动填入用户名输入框
+    setState(() {
+      _userNameController.text = result;
+    });
   }
 
   _validateInput(BuildContext context, AccountProvider accountModel) {
@@ -88,7 +147,7 @@ class LoginState extends State<LoginPage> {
   // 更多： https://stackoverflow.com/questions/51304568/scaffold-of-called-with-a-context-that-does-not-contain-a-scaffold
   _login(BuildContext context, AccountProvider accountModel) async {
     LoginResult result = await WanRepository().login(_userName, _password);
-    var duration = const Duration(milliseconds: _DURATION);
+    var duration = const Duration(milliseconds: ConstVar.COMMON_SNACK_BAR_DURATION);
     if(result.isSuccess()){
       Scaffold.of(context).showSnackBar(SnackBar(
         duration: duration,

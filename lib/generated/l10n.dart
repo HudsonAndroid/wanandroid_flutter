@@ -225,11 +225,71 @@ class S {
     );
   }
 
-  /// `退出登录`
+  /// `logout`
   String get action_logout {
     return Intl.message(
-      '退出登录',
+      'logout',
       name: 'action_logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `退出登录失败`
+  String get tips_logout_failed {
+    return Intl.message(
+      '退出登录失败',
+      name: 'tips_logout_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `没有账号，去注册`
+  String get tips_no_account {
+    return Intl.message(
+      '没有账号，去注册',
+      name: 'tips_no_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `注册`
+  String get action_register {
+    return Intl.message(
+      '注册',
+      name: 'action_register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `请确认密码`
+  String get tips_confirm_password {
+    return Intl.message(
+      '请确认密码',
+      name: 'tips_confirm_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `注册成功`
+  String get tips_register_success {
+    return Intl.message(
+      '注册成功',
+      name: 'tips_register_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `注册失败`
+  String get tips_register_failed {
+    return Intl.message(
+      '注册失败',
+      name: 'tips_register_failed',
       desc: '',
       args: [],
     );
