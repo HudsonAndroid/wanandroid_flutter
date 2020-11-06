@@ -9,3 +9,7 @@ jumpWeb(String url) async {
     throw 'Can not launch $url';
   }
 }
+
+String assetsImg(String name, {String path: 'assets/', String fileType: 'png'}){
+  return '$path$name.$fileType';
+}

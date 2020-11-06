@@ -5,7 +5,7 @@ import 'package:wanandroid_flutter/generated/l10n.dart';
 /// 由于系统本身存在banner，因此和我们自定义的banner冲突，需要处理冲突
 import 'package:wanandroid_flutter/ui/banner/banner.dart' as CustomBanner;
 import 'package:wanandroid_flutter/ui/banner/banner_item.dart';
-import 'package:wanandroid_flutter/common/WebUtil.dart';
+import 'package:wanandroid_flutter/common/common_util.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/entity/wan_banner.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';

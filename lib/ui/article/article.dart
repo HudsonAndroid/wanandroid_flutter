@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'package:wanandroid_flutter/common/WebUtil.dart';
+import 'package:wanandroid_flutter/common/common_util.dart';
 import 'package:wanandroid_flutter/common/state/account_provider.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/generated/l10n.dart';

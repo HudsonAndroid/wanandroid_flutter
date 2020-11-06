@@ -7,7 +7,12 @@ class LoginResult extends BaseResult{
   UserInfo data;
 
   LoginResult.fromJson(Map<String, dynamic> json)
-    : data = UserInfo.fromJson(json), super.fromJson(json);
+    : data = UserInfo.fromJson(json['data']), super.fromJson(json);
+
+  @override
+  String toString() {
+    return 'LoginResult{data: $data}';
+  }
 }
 
 class UserInfo {
@@ -37,6 +42,12 @@ class UserInfo {
     token = json['token'],
     type = json['type'],
     username = json['username'];
+
+
+  @override
+  String toString() {
+    return 'UserInfo{admin: $admin, coinCount: $coinCount, collectIds: $collectIds, email: $email, icon: $icon, id: $id, nickname: $nickname, password: $password, publicName: $publicName, token: $token, type: $type, username: $username}';
+  }
 
   Map<String, dynamic> toJson() => {
     'admin': admin,
