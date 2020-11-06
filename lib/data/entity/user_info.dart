@@ -7,7 +7,7 @@ class LoginResult extends BaseResult{
   UserInfo data;
 
   LoginResult.fromJson(Map<String, dynamic> json)
-    : data = UserInfo.fromJson(json['data']), super.fromJson(json);
+    : data = json['data'] == null ? null : UserInfo.fromJson(json['data']), super.fromJson(json);
 
   @override
   String toString() {

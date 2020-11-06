@@ -21,7 +21,6 @@ class Article extends StatefulWidget {
 
 /// 文章列表的一项
 class ArticleState extends State<Article> {
-  bool isStared = false;
 
   /// 创建文章图片
   Widget buildIcon(String imgLink) {
@@ -64,6 +63,8 @@ class ArticleState extends State<Article> {
   @override
   Widget build(BuildContext context) {
     final accountModel =  Provider.of<AccountProvider>(context);
+    // 不通过article的collect判断，因为无法实时同步
+    bool isStared = accountModel.isArticleStared(widget._article.id);
     return InkWell(
       onTap: (){
         // 直接跳转到指定网页
@@ -112,13 +113,11 @@ class ArticleState extends State<Article> {
                       Expanded(child: SizedBox()),
                       IconButton(
                         icon: Icon(
-                          widget._article.collect ? Icons.favorite : Icons.favorite_border,
-                          color: widget._article.collect ? Colors.red : Colors.grey,),
+                          isStared ? Icons.favorite : Icons.favorite_border,
+                          color: isStared ? Colors.red : Colors.grey,),
                         onPressed: () {
                           if(accountModel.isLogin()){
-                            setState(() {
-                              isStared = !isStared;
-                            });
+                            _toggleStar(isStared, widget._article.id, accountModel);
                           }else{
                             Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
                             // Scaffold.of(context).showSnackBar(SnackBar(
@@ -136,6 +135,15 @@ class ArticleState extends State<Article> {
         ),
       )
     );
+  }
+
+  _toggleStar(bool isNowStared, int id, AccountProvider accountModel) async{
+    bool success = await accountModel.starOrReverseArticle(isNowStared, id);
+    if(success){
+      setState(() {
+        // nothing, just update now
+      });
+    }
   }
 
 }

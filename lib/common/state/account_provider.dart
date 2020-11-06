@@ -3,8 +3,12 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wanandroid_flutter/data/entity/base_result.dart';
 import 'package:wanandroid_flutter/data/entity/user_info.dart';
+import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 
+/// 账号系统，目前收藏的列表是通过SharedPreferences存储的，更合理的操作的话，应该让
+/// 数据库存储
 class AccountProvider with ChangeNotifier {
   static const String KEY_LOGIN_CACHE = "login_cache";
   static const String KEY_LAST_LOGIN_USER = "last_login";
@@ -35,6 +39,41 @@ class AccountProvider with ChangeNotifier {
     if(newUser != null){
       prefs.setString(KEY_LAST_LOGIN_USER, newUser.username);
     }
+  }
+  
+  bool isArticleStared(int id) {
+    return userInfo == null ? false : userInfo.collectIds.contains(id);
+  }
+
+  Future<bool> starOrReverseArticle(bool isNowStared, int id) async {
+    if(!isLogin()){
+      return false;
+    }
+    BaseResult result;
+    var repository = WanRepository();
+    if(isNowStared){
+      result = await repository.unStarArticle(id);
+    }else{
+      result = await repository.starArticle(id);
+    }
+    if(result.isSuccess()){
+      // if it's successful, we should update local collectIds
+      if(!isNowStared){
+        userInfo.collectIds.add(id);
+      }else{
+        userInfo.collectIds.remove(id);
+      }
+      // 同步信息到持久性容器中。或许可以优化，不是每次操作都同步，类似android jetpack的 WorkManager定期处理
+      _sync2Persistent();
+    }
+    return result.isSuccess();
+  }
+
+  // 同步账号信息到SharedPreferences
+  _sync2Persistent() async {
+    if(userInfo == null) return ;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(KEY_LOGIN_CACHE, jsonEncode(userInfo));
   }
 
   isLogin() => userInfo != null;

@@ -19,6 +19,8 @@ class Api {
   static const String LOGIN = "https://www.wanandroid.com/user/login";
   static const String LOGOUT = "https://www.wanandroid.com/user/logout/json";
   static const String REGISTER = "https://www.wanandroid.com/user/register";
+  static const String STAR_ARTICLE = "https://www.wanandroid.com/lg/collect/{id}/json";
+  static const String UN_STAR_ARTICLE = "https://www.wanandroid.com/lg/uncollect_originId/{id}/json";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -150,6 +152,16 @@ class WanRepository {
       "repassword": confirm
     });
     var response = await (await dio).post(Api.REGISTER, data: formData);
+    return BaseResult.fromJson(jsonDecode(response.toString()));
+  }
+
+  Future<BaseResult> starArticle(int id) async {
+    var response = await (await dio).post(Api.STAR_ARTICLE.replaceAll('{id}', id.toString()));
+    return BaseResult.fromJson(jsonDecode(response.toString()));
+  }
+
+  Future<BaseResult> unStarArticle(int id) async {
+    var response = await (await dio).post(Api.UN_STAR_ARTICLE.replaceAll('{id}', id.toString()));
     return BaseResult.fromJson(jsonDecode(response.toString()));
   }
 }
