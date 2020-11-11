@@ -1,7 +1,71 @@
 
-import 'dart:ffi';
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
 
+class StarArticleResultWrapper extends BaseResult {
+  StarArticleListWrapper data;
+
+  StarArticleResultWrapper.fromJson(Map<String, dynamic> json)
+      : data = StarArticleListWrapper.fromJson(json['data']), super.fromJson(json);
+}
+
+class StarArticleListWrapper {
+  int curPage;
+  int offset;
+  bool over;
+  int pageCount;
+  int size;
+  int total;
+  List<StarArticle> datas;
+  
+  StarArticleListWrapper.fromJson(Map<String, dynamic> json)
+    : curPage = json['curPage'],
+      offset = json['offset'],
+      over = json['over'],
+      pageCount = json['pageCount'],
+      size = json['size'],
+      total = json['total'],
+      datas = List<StarArticle>.from(json['datas'].map((x) => StarArticle.fromJson(x)));
+}
+
+/// 收藏文章一项实体数据
+class StarArticle {
+  int id;
+  String author;
+  int chapterId;
+  String chapterName;
+  int courseId;
+  String desc;
+  String envelopePic;
+  String link;
+  String niceDate;
+  String origin;
+  int originId;
+  int publishTime;
+  String title;
+  int userId;
+  int visible;
+  int zan;
+
+  StarArticle.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        author = json['author'],
+        chapterId = json['chapterId'],
+        chapterName = json['chapterName'],
+        courseId = json['courseId'],
+        desc = json['desc'],
+        envelopePic = json['envelopePic'],
+        link = json['link'],
+        niceDate = json['niceDate'],
+        origin = json['origin'],
+        originId = json['originId'],
+        publishTime = json['publishTime'],
+        title = json['title'],
+        userId = json['userId'],
+        visible = json['visible'],
+        zan = json['zan'];
+}
+
+/// 一般情况下的文章
 class WanArticle {
   int id;
   String author;
@@ -123,6 +187,7 @@ class ArticleResultWrapper extends BaseResult{
     : data = ArticleListWrapper.fromJson(json['data']), super.fromJson(json);
 }
 
+/// 文章一页实际数据
 class ArticleListWrapper {
   int curPage;
   int offset;
