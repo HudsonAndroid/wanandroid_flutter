@@ -2,6 +2,23 @@
 
 wanandroid flutter version
 
+# 包结构说明
+项目代码整体包结构以视图层和数据层区分开。
+
+视图层(ui包)中包括了所有的与界面元素相关的代码或Widget，其中article包是文章列表的一项视图；banner是滚动轮播的视图；
+common包含了公用视图；drawer是侧边栏视图；page是所有各个页面的视图包。
+
+数据层(data包)中包括了：
+
+- entity包： 所有网络数据实体对应的实际类的包
+- repository包： 所有网络请求相关的接口和数据处理都在这个包中
+
+处理上面视图层和数据层外，还有其他包。 其中common中包括了状态管理包(state包)和其他一些通用的代码逻辑；generated包和
+l10n包是由国际化插件[Flutter Intl](https://plugins.jetbrains.com/plugin/13666-flutter-intl)自动生成的包，一般
+情况下不需要修改它们。
+
+# 实践内容
+
 ## [Banner实践](/lib/ui/banner)
 
 ## 嵌套滚动型Widget处理方案（首页）
@@ -9,6 +26,7 @@ wanandroid flutter version
 
 ## 国际化
 国际化使用了[Flutter Intl](https://plugins.jetbrains.com/plugin/13666-flutter-intl) 插件，详情见插件介绍和使用方法。
+
 注意：
 
    包结构中，generated是国际化插件生成的文件，不要修改；
