@@ -53,6 +53,9 @@ dependencies:
   dio_cookie_manager: ^1.0.0
   # 提供所在系统的文件存储路径的工具
   path_provider: ^1.6.22
+  # aes 对称加密  见https://pub.dev/packages/aes_crypt
+  # 用于加密用户的账号密码信息，以备首次打开APP时自动登录处理。
+  aes_crypt: ^0.1.1
 
 dev_dependencies:
   flutter_test:

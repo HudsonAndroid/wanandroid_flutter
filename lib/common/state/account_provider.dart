@@ -1,7 +1,10 @@
 
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:aes_crypt/aes_crypt.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
 import 'package:wanandroid_flutter/data/entity/user_info.dart';
@@ -25,6 +28,25 @@ class AccountProvider with ChangeNotifier {
       userInfo = UserInfo.fromJson(jsonDecode(infoJson));
       // now we should notify to listeners.
       notifyListeners();
+    }
+    autoLogin();
+  }
+
+  // 如果之前登录过，首次打开自动登录一次，以获取最新的用户收藏列表（避免由于在其他设备操作，导致数据过旧）
+  autoLogin() async {
+    // 获取在Repository中登录时加密存储的账号密码数据
+    var crypt = AesCrypt(WanRepository.ACCOUNT_CRYPT_PASSWORD);
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String aesFile = appDocDir.path + WanRepository.ACCOUNT_CRYPT_FILE;
+    var account = await crypt.decryptTextFromFile(aesFile);
+    if(account != null){
+      var array = account.split(' ');
+      if(array.length == 2){
+        LoginResult result = await WanRepository().login(array[0], array[1], false);
+        if(result.isSuccess()){
+          changeCurrentUser(result.data);
+        }
+      }
     }
   }
 

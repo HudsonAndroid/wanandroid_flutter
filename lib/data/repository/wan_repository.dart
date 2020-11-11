@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:aes_crypt/aes_crypt.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -21,6 +22,7 @@ class Api {
   static const String REGISTER = "https://www.wanandroid.com/user/register";
   static const String STAR_ARTICLE = "https://www.wanandroid.com/lg/collect/{id}/json";
   static const String UN_STAR_ARTICLE = "https://www.wanandroid.com/lg/uncollect_originId/{id}/json";
+  static const String STAR_ARTICLES = "https://www.wanandroid.com/lg/collect/list/{pageNo}/json";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -70,6 +72,8 @@ class MyCookieManager extends CookieManager{
 }
 
 class WanRepository {
+  static const String ACCOUNT_CRYPT_PASSWORD = "hudson666";
+  static const String ACCOUNT_CRYPT_FILE = '/account_cache.aes';
   static PersistCookieJar _cookieJar;
   static Dio _dio;
 
@@ -131,13 +135,23 @@ class WanRepository {
   }
 
   /// 登录post
-  Future<LoginResult> login(String userName, String password) async {
+  Future<LoginResult> login(String userName, String password, [savePassword = true]) async {
     FormData formData = FormData.fromMap({
       "username": userName,
       "password": password
     });
     var response = await (await dio).post(Api.LOGIN, data: formData);
-    return LoginResult.fromJson(jsonDecode(response.toString()));
+    LoginResult result = LoginResult.fromJson(jsonDecode(response.toString()));
+    if(savePassword && result.isSuccess()){
+      // 加密账号密码并缓存起来
+      var crypt = AesCrypt(ACCOUNT_CRYPT_PASSWORD);
+      crypt.setOverwriteMode(AesCryptOwMode.on);
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      // 存储的位置在 /data/data/{package name}/app_flutter/ 目录下
+      String aesFile = appDocDir.path + ACCOUNT_CRYPT_FILE;
+      crypt.encryptTextToFile('$userName $password', aesFile);
+    }
+    return result;
   }
 
   Future<BaseResult> logout() async {
@@ -163,5 +177,10 @@ class WanRepository {
   Future<BaseResult> unStarArticle(int id) async {
     var response = await (await dio).post(Api.UN_STAR_ARTICLE.replaceAll('{id}', id.toString()));
     return BaseResult.fromJson(jsonDecode(response.toString()));
+  }
+
+  Future<StarArticleResultWrapper> getStarArticles(int pageNo) async {
+    var response = await (await dio).get(Api.STAR_ARTICLES.replaceAll('{pageNo}', pageNo.toString()));
+    return StarArticleResultWrapper.fromJson(jsonDecode(response.toString()));
   }
 }
