@@ -47,6 +47,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "tips_register_failed" : MessageLookupByLibrary.simpleMessage("register failed"),
     "tips_register_success" : MessageLookupByLibrary.simpleMessage("register success"),
     "tips_user_name_empty" : MessageLookupByLibrary.simpleMessage("user name cannot be empty"),
+    "treePage" : MessageLookupByLibrary.simpleMessage("Tree"),
+    "tree_sub_navi" : MessageLookupByLibrary.simpleMessage("navigation"),
+    "tree_sub_tree" : MessageLookupByLibrary.simpleMessage("tree"),
     "wechatPage" : MessageLookupByLibrary.simpleMessage("WeChatArticle")
   };
 }

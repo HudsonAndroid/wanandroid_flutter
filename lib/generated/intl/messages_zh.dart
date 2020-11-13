@@ -47,6 +47,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "tips_register_failed" : MessageLookupByLibrary.simpleMessage("注册失败"),
     "tips_register_success" : MessageLookupByLibrary.simpleMessage("注册成功"),
     "tips_user_name_empty" : MessageLookupByLibrary.simpleMessage("用户名不能为空"),
+    "treePage" : MessageLookupByLibrary.simpleMessage("体系"),
+    "tree_sub_navi" : MessageLookupByLibrary.simpleMessage("导航"),
+    "tree_sub_tree" : MessageLookupByLibrary.simpleMessage("体系"),
     "wechatPage" : MessageLookupByLibrary.simpleMessage("微信公众号")
   };
 }

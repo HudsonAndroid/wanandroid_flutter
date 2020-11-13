@@ -25,5 +25,8 @@
   "tips_confirm_password": "please confirm password",
   "tips_register_success": "register success",
   "tips_register_failed": "register failed",
-  "projectPage": "ProjectArticle"
+  "projectPage": "ProjectArticle",
+  "tree_sub_tree": "tree",
+  "tree_sub_navi": "navigation",
+  "treePage": "Tree"
 }

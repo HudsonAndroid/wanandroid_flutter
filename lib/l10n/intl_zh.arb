@@ -25,5 +25,8 @@
   "tips_confirm_password": "请确认密码",
   "tips_register_success": "注册成功",
   "tips_register_failed": "注册失败",
-  "projectPage": "项目"
+  "projectPage": "项目",
+  "tree_sub_tree": "体系",
+  "tree_sub_navi": "导航",
+  "treePage": "体系"
 }

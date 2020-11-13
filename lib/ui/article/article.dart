@@ -45,7 +45,10 @@ class ArticleState extends State<Article> {
   /// 决定是否创建新文章标识
   Widget buildNewFlag(bool isNew){
     if(isNew){
-      return RoundRectangle(radius: 6.0, color: Colors.red, text: S.of(context).flag_new);
+      return RoundRectangle(borderColor: Colors.red,
+          margin: EdgeInsets.fromLTRB(6.0, 2.0, 3.0, 2.0),
+          padding: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
+          textColor: Colors.red, text: S.of(context).flag_new);
     }
     return Container();
   }
@@ -53,7 +56,10 @@ class ArticleState extends State<Article> {
   /// 决定是否创建置顶标识
   Widget buildTopFlag(bool isTop){
     if(isTop){
-      return RoundRectangle(radius: 6.0, color: Colors.purple, text: S.of(context).flag_top,);
+      return RoundRectangle(borderColor: Colors.purple,
+          margin: EdgeInsets.fromLTRB(6.0, 2.0, 3.0, 2.0),
+          padding: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
+          textColor: Colors.purple, text: S.of(context).flag_top,);
     }
     return Container();
   }

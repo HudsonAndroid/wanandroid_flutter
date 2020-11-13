@@ -36,10 +36,10 @@ class _CommonTabPageState extends State<CommonTabPage> with SingleTickerProvider
   void initState() {
     super.initState();
     _refreshController = RefreshController();
-    _loadWxCategory();
+    _loadCategory();
   }
 
-  _loadWxCategory() async {
+  _loadCategory() async {
     category = widget.loadTabCategories();
     CategoryWrapper result = await category;
     categories = result.data;

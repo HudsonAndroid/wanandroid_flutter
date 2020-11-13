@@ -1,5 +1,6 @@
 
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
+import 'package:wanandroid_flutter/ui/page/tree/tree_page.dart';
 
 class Category {
   List<Category> children;
@@ -20,6 +21,12 @@ class Category {
       parentChapterId = json['parentChapterId'],
       userControlSetTop = json['userControlSetTop'],
       visible = json['visible'];
+
+  /// don't modify it, because it's used in [TreePage]
+  @override
+  String toString() {
+    return name;
+  }
 }
 
 class CategoryWrapper extends BaseResult {

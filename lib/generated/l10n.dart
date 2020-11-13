@@ -304,6 +304,36 @@ class S {
       args: [],
     );
   }
+
+  /// `tree`
+  String get tree_sub_tree {
+    return Intl.message(
+      'tree',
+      name: 'tree_sub_tree',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `navigation`
+  String get tree_sub_navi {
+    return Intl.message(
+      'navigation',
+      name: 'tree_sub_navi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tree`
+  String get treePage {
+    return Intl.message(
+      'Tree',
+      name: 'treePage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

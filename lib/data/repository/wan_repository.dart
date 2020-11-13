@@ -9,6 +9,7 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
 import 'package:wanandroid_flutter/data/entity/category.dart';
+import 'package:wanandroid_flutter/data/entity/navigation_item.dart';
 import 'package:wanandroid_flutter/data/entity/user_info.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/entity/wan_banner.dart';
@@ -28,6 +29,9 @@ class Api {
   static const String WX_ARTICLE = "https://www.wanandroid.com/wxarticle/list/{wechatId}/{pageNo}/json";
   static const String PROJECT_CATEGORY = "https://www.wanandroid.com/project/tree/json";
   static const String PROJECT_ARTICLE = "https://www.wanandroid.com/article/list/{pageNo}/json";
+  static const String TREE_CATEGORY = "https://www.wanandroid.com/tree/json";
+  static const String TREE_ARTICLE = "https://www.wanandroid.com/article/list/{pageNo}/json";
+  static const String NAVIGATION_LIST = "https://www.wanandroid.com/navi/json";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -216,5 +220,26 @@ class WanRepository {
         queryParameters: {'cid': projectId}
     );
     return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取体系列表
+  Future<CategoryWrapper> getTreeCategory() async {
+    var response = await (await dio).get(Api.TREE_CATEGORY);
+    return CategoryWrapper.fromJson(jsonDecode(response.toString()));
+  }
+
+  // 获取指定体系的文章列表
+  Future<ArticleListWrapper> getTreeArticles(int treeId, int pageNo) async {
+    var response = await (await dio).get(
+        Api.TREE_ARTICLE.replaceAll('{pageNo}', pageNo.toString()),
+        queryParameters: {'cid': treeId}
+    );
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取导航结果列表
+  Future<NavigationWrapper> getNavigationList() async {
+    var response = await (await dio).get(Api.NAVIGATION_LIST);
+    return NavigationWrapper.fromJson(jsonDecode(response.toString()));
   }
 }

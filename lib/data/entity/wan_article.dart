@@ -1,5 +1,6 @@
 
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
+import 'package:wanandroid_flutter/ui/page/tree/navigation_page.dart';
 
 class StarArticleResultWrapper extends BaseResult {
   StarArticleListWrapper data;
@@ -155,6 +156,12 @@ class WanArticle {
   // 由于这里只涉及一个参数，因此没有使用到
   @override
   int get hashCode => id.hashCode;
+
+  /// don't modify it, it's used in [NavigationPage]
+  @override
+  String toString() {
+    return title;
+  }
 }
 
 class Tag {

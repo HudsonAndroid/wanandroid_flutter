@@ -8,6 +8,7 @@ import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/ui/drawer/nav_drawer.dart';
 import 'package:wanandroid_flutter/ui/page/common_tab_page.dart';
 import 'package:wanandroid_flutter/ui/page/home_page.dart';
+import 'package:wanandroid_flutter/ui/page/tree_tab_page.dart';
 // import 'package:wanandroid_flutter/ui/page/home_page_deprecated.dart';
 import 'generated/l10n.dart';
 
@@ -61,7 +62,8 @@ class _PageContainerState extends State<PageContainer> {
     final List<String> title = [
       S.of(context).homePage,
       S.of(context).wechatPage,
-      S.of(context).projectPage
+      S.of(context).projectPage,
+      S.of(context).treePage
     ];
     final WanRepository repository = WanRepository();
     return Scaffold(
@@ -76,6 +78,8 @@ class _PageContainerState extends State<PageContainer> {
             currentIndex = index;
           });
         },
+        // 超过3个时会出问题，见https://stackoverflow.com/questions/52199196/flutter-bottomnavigationbar-not-working-with-more-than-three-items
+        type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
         items: [
           // 配置图标
@@ -90,6 +94,10 @@ class _PageContainerState extends State<PageContainer> {
           BottomNavigationBarItem(
             icon: Icon(Icons.archive),
             title: Text(title[2])
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            title: Text(title[3])
           )
         ],
       ),
@@ -111,7 +119,8 @@ class _PageContainerState extends State<PageContainer> {
             loadCategoryArticle: (int categoryId, int pageNo){
               return repository.getProjectArticles(categoryId, pageNo);
             },
-          )
+          ),
+          TreeTabPage(),
         ],
         index: currentIndex,
       ),
