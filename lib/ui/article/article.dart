@@ -25,12 +25,17 @@ class ArticleState extends State<Article> {
   /// 创建文章图片
   Widget buildIcon(String imgLink) {
     if(imgLink?.isNotEmpty == true){
+
       return Container(
         width: 115,
-        child: FadeInImage.memoryNetwork(
-          placeholder: kTransparentImage,
-          image: imgLink,
-          fit: BoxFit.fill,
+        margin: EdgeInsets.only(left: 10, right: 10),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image: imgLink,
+            fit: BoxFit.fill,
+          ),
         ),
       );
     }

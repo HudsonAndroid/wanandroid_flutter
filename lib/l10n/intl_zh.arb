@@ -24,5 +24,6 @@
   "action_register": "注册",
   "tips_confirm_password": "请确认密码",
   "tips_register_success": "注册成功",
-  "tips_register_failed": "注册失败"
+  "tips_register_failed": "注册失败",
+  "projectPage": "项目"
 }

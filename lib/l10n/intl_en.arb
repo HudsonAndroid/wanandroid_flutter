@@ -24,5 +24,6 @@
   "action_register": "register",
   "tips_confirm_password": "please confirm password",
   "tips_register_success": "register success",
-  "tips_register_failed": "register failed"
+  "tips_register_failed": "register failed",
+  "projectPage": "ProjectArticle"
 }

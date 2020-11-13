@@ -294,6 +294,16 @@ class S {
       args: [],
     );
   }
+
+  /// `ProjectArticle`
+  String get projectPage {
+    return Intl.message(
+      'ProjectArticle',
+      name: 'projectPage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

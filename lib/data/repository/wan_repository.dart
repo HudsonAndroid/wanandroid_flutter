@@ -26,6 +26,8 @@ class Api {
   static const String STAR_ARTICLES = "https://www.wanandroid.com/lg/collect/list/{pageNo}/json";
   static const String WX_CATEGORY = "https://www.wanandroid.com/wxarticle/chapters/json";
   static const String WX_ARTICLE = "https://www.wanandroid.com/wxarticle/list/{wechatId}/{pageNo}/json";
+  static const String PROJECT_CATEGORY = "https://www.wanandroid.com/project/tree/json";
+  static const String PROJECT_ARTICLE = "https://www.wanandroid.com/article/list/{pageNo}/json";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -198,6 +200,21 @@ class WanRepository {
     var response = await (await dio).get(Api.WX_ARTICLE
           .replaceAll('{wechatId}', wechatId.toString())
           .replaceAll('{pageNo}', pageNo.toString()));
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取项目tab分类列表（不包含页面数据）
+  Future<CategoryWrapper> getProjectCategory() async {
+    var response = await (await dio).get(Api.PROJECT_CATEGORY);
+    return CategoryWrapper.fromJson(jsonDecode(response.toString()));
+  }
+
+  // 获取项目文章列表
+  Future<ArticleListWrapper> getProjectArticles(int projectId, int pageNo) async {
+    var response = await (await dio).get(
+        Api.PROJECT_ARTICLE.replaceAll('{pageNo}', pageNo.toString()),
+        queryParameters: {'cid': projectId}
+    );
     return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
   }
 }

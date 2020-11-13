@@ -4,9 +4,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wanandroid_flutter/common/state/account_provider.dart';
+import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/ui/drawer/nav_drawer.dart';
+import 'package:wanandroid_flutter/ui/page/common_tab_page.dart';
 import 'package:wanandroid_flutter/ui/page/home_page.dart';
-import 'package:wanandroid_flutter/ui/page/wx/wechat_page.dart';
 // import 'package:wanandroid_flutter/ui/page/home_page_deprecated.dart';
 import 'generated/l10n.dart';
 
@@ -59,8 +60,10 @@ class _PageContainerState extends State<PageContainer> {
   Widget build(BuildContext context) {
     final List<String> title = [
       S.of(context).homePage,
-      S.of(context).wechatPage
+      S.of(context).wechatPage,
+      S.of(context).projectPage
     ];
+    final WanRepository repository = WanRepository();
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
@@ -83,6 +86,10 @@ class _PageContainerState extends State<PageContainer> {
           BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
             title: Text(title[1])
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.archive),
+            title: Text(title[2])
           )
         ],
       ),
@@ -90,7 +97,21 @@ class _PageContainerState extends State<PageContainer> {
         children: <Widget>[
           // HomePageDeprecated(title: S.of(context).homePage),
           HomePage(),
-          WechatPage(title: S.of(context).wechatPage,)
+          // 微信公众号文章
+          CommonTabPage(
+            title: S.of(context).wechatPage,
+            loadTabCategories: repository.getWxCategory,
+            loadCategoryArticle: (int categoryId, int pageNo){
+              return repository.getWxArticles(categoryId, pageNo);
+            },
+          ),
+          CommonTabPage(
+            title: S.of(context).projectPage,
+            loadTabCategories: repository.getProjectCategory,
+            loadCategoryArticle: (int categoryId, int pageNo){
+              return repository.getProjectArticles(categoryId, pageNo);
+            },
+          )
         ],
         index: currentIndex,
       ),
