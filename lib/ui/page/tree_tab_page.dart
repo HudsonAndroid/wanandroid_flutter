@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:wanandroid_flutter/common/common_const_var.dart';
 import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/page/tree/navigation_page.dart';
 import 'package:wanandroid_flutter/ui/page/tree/tree_page.dart';
@@ -24,7 +25,7 @@ class _TreeTabPageState extends State<TreeTabPage> with SingleTickerProviderStat
     return Column(
       children: <Widget>[
         Container(
-          height: 60,
+          height: ConstVar.COMMON_TAB_BAR_HEIGHT,
           child: TabBar(
             isScrollable: false,
             tabs: <Widget>[

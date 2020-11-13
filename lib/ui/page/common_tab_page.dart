@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:wanandroid_flutter/common/common_const_var.dart';
 import 'package:wanandroid_flutter/data/entity/category.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
@@ -65,7 +66,7 @@ class _CommonTabPageState extends State<CommonTabPage> with SingleTickerProvider
           child: Column(
             children: <Widget>[
               Container(
-                height: 60,
+                height: ConstVar.COMMON_TAB_BAR_HEIGHT,
                 child: TabBar(
                   isScrollable: true,
                   tabs: List<Widget>.generate(categories.length, (index){
