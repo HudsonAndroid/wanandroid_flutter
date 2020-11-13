@@ -119,7 +119,7 @@ class ArticleState extends State<Article> {
                           data: widget._article.superChapterName + "/" + widget._article.chapterName,
                           defaultTextStyle: TextStyle(fontSize: 13.0, color: Colors.grey),
                         ),
-                        width: 250,
+                        width: 180,
                       ),
                       Expanded(child: SizedBox()),
                       IconButton(
