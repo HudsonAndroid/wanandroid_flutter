@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
+import 'package:wanandroid_flutter/data/entity/category.dart';
 import 'package:wanandroid_flutter/data/entity/user_info.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/entity/wan_banner.dart';
@@ -23,6 +24,8 @@ class Api {
   static const String STAR_ARTICLE = "https://www.wanandroid.com/lg/collect/{id}/json";
   static const String UN_STAR_ARTICLE = "https://www.wanandroid.com/lg/uncollect_originId/{id}/json";
   static const String STAR_ARTICLES = "https://www.wanandroid.com/lg/collect/list/{pageNo}/json";
+  static const String WX_CATEGORY = "https://www.wanandroid.com/wxarticle/chapters/json";
+  static const String WX_ARTICLE = "https://www.wanandroid.com/wxarticle/list/{wechatId}/{pageNo}/json";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -182,5 +185,19 @@ class WanRepository {
   Future<StarArticleResultWrapper> getStarArticles(int pageNo) async {
     var response = await (await dio).get(Api.STAR_ARTICLES.replaceAll('{pageNo}', pageNo.toString()));
     return StarArticleResultWrapper.fromJson(jsonDecode(response.toString()));
+  }
+
+  // 获取微信tab分类列表（不包含页面数据）
+  Future<CategoryWrapper> getWxCategory() async {
+    var response = await (await dio).get(Api.WX_CATEGORY);
+    return CategoryWrapper.fromJson(jsonDecode(response.toString()));
+  }
+
+  // 获取微信文章列表
+  Future<ArticleListWrapper> getWxArticles(int wechatId, int pageNo) async {
+    var response = await (await dio).get(Api.WX_ARTICLE
+          .replaceAll('{wechatId}', wechatId.toString())
+          .replaceAll('{pageNo}', pageNo.toString()));
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
   }
 }

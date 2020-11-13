@@ -6,8 +6,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wanandroid_flutter/common/state/account_provider.dart';
 import 'package:wanandroid_flutter/ui/drawer/nav_drawer.dart';
 import 'package:wanandroid_flutter/ui/page/home_page.dart';
+import 'package:wanandroid_flutter/ui/page/wx/wechat_page.dart';
 // import 'package:wanandroid_flutter/ui/page/home_page_deprecated.dart';
-import 'package:wanandroid_flutter/ui/page/wechat_page.dart';
 import 'generated/l10n.dart';
 
 void main() {
