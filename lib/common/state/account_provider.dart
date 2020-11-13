@@ -28,8 +28,8 @@ class AccountProvider with ChangeNotifier {
       userInfo = UserInfo.fromJson(jsonDecode(infoJson));
       // now we should notify to listeners.
       notifyListeners();
+      autoLogin();
     }
-    autoLogin();
   }
 
   // 如果之前登录过，首次打开自动登录一次，以获取最新的用户收藏列表（避免由于在其他设备操作，导致数据过旧）
@@ -38,15 +38,20 @@ class AccountProvider with ChangeNotifier {
     var crypt = AesCrypt(WanRepository.ACCOUNT_CRYPT_PASSWORD);
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String aesFile = appDocDir.path + WanRepository.ACCOUNT_CRYPT_FILE;
-    var account = await crypt.decryptTextFromFile(aesFile);
-    if(account != null){
-      var array = account.split(' ');
-      if(array.length == 2){
-        LoginResult result = await WanRepository().login(array[0], array[1], false);
-        if(result.isSuccess()){
-          changeCurrentUser(result.data);
+    try{
+      var account = await crypt.decryptTextFromFile(aesFile);
+      if(account != null){
+        var array = account.split(' ');
+        if(array.length == 2){
+          LoginResult result = await WanRepository().login(array[0], array[1], false);
+          if(result.isSuccess()){
+            changeCurrentUser(result.data);
+          }
         }
       }
+    } on FileSystemException catch(e){
+      // maybe not login before, it will invoke FileSystemException, do nothing.
+      print('$e, you can ignore it if you do not login account before.');
     }
   }
 
@@ -56,13 +61,13 @@ class AccountProvider with ChangeNotifier {
     // save cache
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // if newUser is null, will clean the cache
-    prefs.setString(KEY_LOGIN_CACHE, jsonEncode(newUser == null ? null : newUser.toJson()));
+    prefs.setString(KEY_LOGIN_CACHE, newUser == null ? null : jsonEncode(newUser.toJson()));
     // 如果登录成功了，则保存记录，以便下次进入登录页面时默认填入用户名
     if(newUser != null){
       prefs.setString(KEY_LAST_LOGIN_USER, newUser.username);
     }
   }
-  
+
   bool isArticleStared(int id) {
     return userInfo == null ? false : userInfo.collectIds.contains(id);
   }
