@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroid_flutter/ui/common/round_rectangle.dart';
 
-typedef OnItemClick = void Function(dynamic item);
+typedef OnItemClick = void Function(dynamic item, int position);
 
 class WrapLayout extends StatelessWidget {
   final List<dynamic> contents;
@@ -23,7 +23,7 @@ class WrapLayout extends StatelessWidget {
             borderRadius: radius,
             child: InkWell(
               onTap: (){
-                onItemClick(contents[index]);
+                onItemClick(contents[index], index);
               },
               child: RoundRectangle(
                 padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 8.0),

@@ -54,7 +54,7 @@ class NavigationPageState extends State<NavigationPage> {
                       ),
                       WrapLayout(
                         contents: navigationList[index].articles,
-                        onItemClick: (item) {
+                        onItemClick: (item, position) {
                           jumpWeb(item.link);
                         },
                       )

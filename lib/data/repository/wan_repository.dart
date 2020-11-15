@@ -194,9 +194,9 @@ class WanRepository {
   }
 
   // 获取微信tab分类列表（不包含页面数据）
-  Future<CategoryWrapper> getWxCategory() async {
+  Future<List<Category>> getWxCategory() async {
     var response = await (await dio).get(Api.WX_CATEGORY);
-    return CategoryWrapper.fromJson(jsonDecode(response.toString()));
+    return CategoryWrapper.fromJson(jsonDecode(response.toString())).data;
   }
 
   // 获取微信文章列表
@@ -208,9 +208,9 @@ class WanRepository {
   }
 
   // 获取项目tab分类列表（不包含页面数据）
-  Future<CategoryWrapper> getProjectCategory() async {
+  Future<List<Category>> getProjectCategory() async {
     var response = await (await dio).get(Api.PROJECT_CATEGORY);
-    return CategoryWrapper.fromJson(jsonDecode(response.toString()));
+    return CategoryWrapper.fromJson(jsonDecode(response.toString())).data;
   }
 
   // 获取项目文章列表

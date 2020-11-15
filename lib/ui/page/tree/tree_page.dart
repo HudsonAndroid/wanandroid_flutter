@@ -5,6 +5,7 @@ import 'package:wanandroid_flutter/data/entity/category.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/ui/common/page_wrapper.dart';
 import 'package:wanandroid_flutter/ui/common/wrap_layout.dart';
+import 'package:wanandroid_flutter/ui/page/tree/tree_detail_tab_page.dart';
 
 class TreePage extends StatefulWidget {
 
@@ -57,8 +58,11 @@ class _TreePageState extends State<TreePage> {
                           ),
                           WrapLayout(
                             contents: categories[index].children,
-                            onItemClick: (item){
-                              // todo 跳转到结果页面 item 是一项的实例
+                            onItemClick: (item, position){
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (context) =>
+                                    TreeDetailTabPage(category: categories[index],
+                                        selectTabIndex: position)));
                             },
                           )
                         ],
