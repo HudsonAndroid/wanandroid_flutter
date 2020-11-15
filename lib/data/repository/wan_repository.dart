@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
 import 'package:wanandroid_flutter/data/entity/category.dart';
 import 'package:wanandroid_flutter/data/entity/navigation_item.dart';
+import 'package:wanandroid_flutter/data/entity/search_word.dart';
 import 'package:wanandroid_flutter/data/entity/user_info.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/entity/wan_banner.dart';
@@ -32,6 +33,8 @@ class Api {
   static const String TREE_CATEGORY = "https://www.wanandroid.com/tree/json";
   static const String TREE_ARTICLE = "https://www.wanandroid.com/article/list/{pageNo}/json";
   static const String NAVIGATION_LIST = "https://www.wanandroid.com/navi/json";
+  static const String HOT_SEARCH_WORD = "https://www.wanandroid.com/hotkey/json";
+  static const String SEARCH_RESULT = "https://www.wanandroid.com/article/query/{pageNo}/json";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -241,5 +244,19 @@ class WanRepository {
   Future<NavigationWrapper> getNavigationList() async {
     var response = await (await dio).get(Api.NAVIGATION_LIST);
     return NavigationWrapper.fromJson(jsonDecode(response.toString()));
+  }
+
+  Future<List<SearchWord>> getHotSearch() async {
+    var response = await (await dio).get(Api.HOT_SEARCH_WORD);
+    return SearchWordWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  Future<ArticleListWrapper> getSearchResult(String word, int pageNo) async {
+    FormData formData = FormData.fromMap({
+      "k": word,
+    });
+    var response = await (await dio).post(Api.SEARCH_RESULT
+        .replaceAll('{pageNo}', pageNo.toString()), data: formData);
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
   }
 }

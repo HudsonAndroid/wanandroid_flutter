@@ -8,6 +8,7 @@ import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/ui/drawer/nav_drawer.dart';
 import 'package:wanandroid_flutter/ui/page/common_tab_page.dart';
 import 'package:wanandroid_flutter/ui/page/home_page.dart';
+import 'package:wanandroid_flutter/ui/page/search/search_page.dart';
 import 'package:wanandroid_flutter/ui/page/tree_tab_page.dart';
 // import 'package:wanandroid_flutter/ui/page/home_page_deprecated.dart';
 import 'generated/l10n.dart';
@@ -70,6 +71,18 @@ class _PageContainerState extends State<PageContainer> {
       drawer: NavDrawer(),
       appBar: AppBar(
         title: Text(title[currentIndex]),
+        /// 右侧
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.search),
+            tooltip: S.of(context).action_search,
+            onPressed: (){
+              // 进入搜素页面
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => SearchPage()));
+            },
+          )
+        ],
       ),
       // 底部切换栏
       bottomNavigationBar: BottomNavigationBar(

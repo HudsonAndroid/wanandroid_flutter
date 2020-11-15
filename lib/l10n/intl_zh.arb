@@ -28,5 +28,8 @@
   "projectPage": "项目",
   "tree_sub_tree": "体系",
   "tree_sub_navi": "导航",
-  "treePage": "体系"
+  "treePage": "体系",
+  "action_search": "搜索",
+  "tips_search_hint": "输入关键字，多个关键字空格隔开",
+  "hot_search": "热门搜索"
 }

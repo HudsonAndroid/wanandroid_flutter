@@ -334,6 +334,36 @@ class S {
       args: [],
     );
   }
+
+  /// `search`
+  String get action_search {
+    return Intl.message(
+      'search',
+      name: 'action_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter keywords, separate multiple keywords with spaces`
+  String get tips_search_hint {
+    return Intl.message(
+      'Enter keywords, separate multiple keywords with spaces',
+      name: 'tips_search_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `hot search`
+  String get hot_search {
+    return Intl.message(
+      'hot search',
+      name: 'hot_search',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

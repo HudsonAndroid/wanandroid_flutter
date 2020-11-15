@@ -28,5 +28,8 @@
   "projectPage": "ProjectArticle",
   "tree_sub_tree": "tree",
   "tree_sub_navi": "navigation",
-  "treePage": "Tree"
+  "treePage": "Tree",
+  "action_search": "search",
+  "tips_search_hint": "Enter keywords, separate multiple keywords with spaces",
+  "hot_search": "hot search"
 }
