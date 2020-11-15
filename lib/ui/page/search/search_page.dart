@@ -1,11 +1,14 @@
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/page/article_page.dart';
 import 'package:wanandroid_flutter/ui/page/search/default_search_page.dart';
 
 class SearchPage extends StatefulWidget {
+  static const String KEY_HISTORY = "history_search";
+  static const int MAX_HISTORY_COUNT = 16;
 
   @override
   State<StatefulWidget> createState() => SearchPageState();
@@ -34,7 +37,7 @@ class SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: _onWillPop,
+      onWillPop: _onWillPop, /// 修改返回的逻辑
       child: Scaffold(
         appBar: AppBar(
 //        title: Text(S.of(context).action_search),
@@ -73,6 +76,7 @@ class SearchPageState extends State<SearchPage> {
                   setState(() {
                     searchWord = editContent;
                   });
+                  _saveSearchHistory(editContent);
                 }
               },
             )
@@ -83,14 +87,32 @@ class SearchPageState extends State<SearchPage> {
     );
   }
 
+  _saveSearchHistory(String word) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> historyWords = prefs.getStringList(SearchPage.KEY_HISTORY);
+    if(historyWords != null){
+      if(historyWords.length > SearchPage.MAX_HISTORY_COUNT){
+        historyWords.sublist(historyWords.length - SearchPage.MAX_HISTORY_COUNT);
+      }
+      if(historyWords.contains(word)){
+        historyWords.remove(word);
+      }
+    }else{
+      historyWords = [];
+    }
+    historyWords.add(word);
+    prefs.setStringList(SearchPage.KEY_HISTORY, historyWords);
+  }
+
   Widget _getPage() {
     if(searchWord == null){
       return DefaultSearchPage(
         wordClick: (word){
-          _controller.text = word.name;
+          _controller.text = word;
           setState(() {
-            searchWord = word.name;
+            searchWord = word;
           });
+          _saveSearchHistory(word);
         },
       );
     }else{

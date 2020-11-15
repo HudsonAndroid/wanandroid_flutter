@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "action_clean_record" : MessageLookupByLibrary.simpleMessage(" 清空搜索记录 "),
     "action_input_password" : MessageLookupByLibrary.simpleMessage("请输入密码"),
     "action_input_user_name" : MessageLookupByLibrary.simpleMessage("请输入用户名"),
     "action_login" : MessageLookupByLibrary.simpleMessage("登录"),
@@ -30,6 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appName" : MessageLookupByLibrary.simpleMessage("玩转安卓"),
     "flag_new" : MessageLookupByLibrary.simpleMessage("新"),
     "flag_top" : MessageLookupByLibrary.simpleMessage("置顶"),
+    "history_search" : MessageLookupByLibrary.simpleMessage("历史搜索"),
     "homePage" : MessageLookupByLibrary.simpleMessage("首页"),
     "hot_search" : MessageLookupByLibrary.simpleMessage("热门搜索"),
     "loadMore" : MessageLookupByLibrary.simpleMessage("加载更多"),

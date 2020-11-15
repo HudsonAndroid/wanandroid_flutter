@@ -31,5 +31,7 @@
   "treePage": "Tree",
   "action_search": "search",
   "tips_search_hint": "Enter keywords, separate multiple keywords with spaces",
-  "hot_search": "hot search"
+  "hot_search": "hot search",
+  "history_search": "history search",
+  "action_clean_record": " clean records "
 }

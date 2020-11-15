@@ -364,6 +364,26 @@ class S {
       args: [],
     );
   }
+
+  /// `history search`
+  String get history_search {
+    return Intl.message(
+      'history search',
+      name: 'history_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` clean records `
+  String get action_clean_record {
+    return Intl.message(
+      ' clean records ',
+      name: 'action_clean_record',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

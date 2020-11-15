@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "action_clean_record" : MessageLookupByLibrary.simpleMessage(" clean records "),
     "action_input_password" : MessageLookupByLibrary.simpleMessage("please input account password"),
     "action_input_user_name" : MessageLookupByLibrary.simpleMessage("please input user name"),
     "action_login" : MessageLookupByLibrary.simpleMessage("login account"),
@@ -30,6 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appName" : MessageLookupByLibrary.simpleMessage("WanAndroid"),
     "flag_new" : MessageLookupByLibrary.simpleMessage("new"),
     "flag_top" : MessageLookupByLibrary.simpleMessage("top"),
+    "history_search" : MessageLookupByLibrary.simpleMessage("history search"),
     "homePage" : MessageLookupByLibrary.simpleMessage("Home"),
     "hot_search" : MessageLookupByLibrary.simpleMessage("hot search"),
     "loadMore" : MessageLookupByLibrary.simpleMessage("load more"),
