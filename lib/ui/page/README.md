@@ -14,6 +14,7 @@
 
 ## 包结构说明
  - search包是与搜索功能相关的page页面
+ - sidemenu包是侧边栏功能相关的page页面
  - tree包是体系tab栏中的page页面
  - tree_tab_page是tree功能tab在APP首页BottomNavigationBar中的一项
  - article_page是所有包含文章列表页面的统一，支持下拉刷新，上拉加载更多，加载指示器（失败重试方案）等逻辑

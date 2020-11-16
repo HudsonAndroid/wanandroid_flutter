@@ -384,6 +384,26 @@ class S {
       args: [],
     );
   }
+
+  /// `ask`
+  String get menu_ask {
+    return Intl.message(
+      'ask',
+      name: 'menu_ask',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `square`
+  String get menu_square {
+    return Intl.message(
+      'square',
+      name: 'menu_square',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

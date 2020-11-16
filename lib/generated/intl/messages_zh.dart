@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "homePage" : MessageLookupByLibrary.simpleMessage("首页"),
     "hot_search" : MessageLookupByLibrary.simpleMessage("热门搜索"),
     "loadMore" : MessageLookupByLibrary.simpleMessage("加载更多"),
+    "menu_ask" : MessageLookupByLibrary.simpleMessage("问答"),
+    "menu_square" : MessageLookupByLibrary.simpleMessage("广场"),
     "noMoreData" : MessageLookupByLibrary.simpleMessage("没有更多数据了"),
     "projectPage" : MessageLookupByLibrary.simpleMessage("项目"),
     "sideMenuAsk" : MessageLookupByLibrary.simpleMessage("问答"),

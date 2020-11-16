@@ -6,8 +6,8 @@ import 'package:wanandroid_flutter/common/state/account_provider.dart';
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/generated/l10n.dart';
-import 'package:wanandroid_flutter/ui/common/round_button.dart';
 import 'package:wanandroid_flutter/ui/page/login_page.dart';
+import 'package:wanandroid_flutter/ui/page/sidemenu/article_page_with_toolbar.dart';
 
 /// 侧边栏
 /// 参考：https://medium.com/@maffan/how-to-create-a-side-menu-in-flutter-a2df7833fdfb
@@ -113,14 +113,32 @@ class NavDrawer extends StatelessWidget {
             title: Text(S
                 .of(context)
                 .sideMenuAsk),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ArticlePageWithToolbar(
+                loadArticle: (int pageNo){
+                  return WanRepository().getAskArticle(pageNo);
+                },
+                title: S.of(context).menu_ask,
+              )));
+            },
           ),
           ListTile( // 广场
             leading: Icon(Icons.question_answer),
             title: Text(S
                 .of(context)
                 .sideMenuSquare),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ArticlePageWithToolbar(
+                loadArticle: (int pageNo){
+                  return WanRepository().getSquareArticle(pageNo);
+                },
+                title: S.of(context).menu_square,
+              )));
+            },
           ),
           ListTile( // 设置
             leading: Icon(Icons.settings),

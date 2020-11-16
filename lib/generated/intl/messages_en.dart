@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "homePage" : MessageLookupByLibrary.simpleMessage("Home"),
     "hot_search" : MessageLookupByLibrary.simpleMessage("hot search"),
     "loadMore" : MessageLookupByLibrary.simpleMessage("load more"),
+    "menu_ask" : MessageLookupByLibrary.simpleMessage("ask"),
+    "menu_square" : MessageLookupByLibrary.simpleMessage("square"),
     "noMoreData" : MessageLookupByLibrary.simpleMessage("no more data"),
     "projectPage" : MessageLookupByLibrary.simpleMessage("ProjectArticle"),
     "sideMenuAsk" : MessageLookupByLibrary.simpleMessage("ask"),

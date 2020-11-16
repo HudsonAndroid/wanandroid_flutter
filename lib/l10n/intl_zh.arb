@@ -33,5 +33,7 @@
   "tips_search_hint": "输入关键字，多个关键字空格隔开",
   "hot_search": "热门搜索",
   "history_search": "历史搜索",
-  "action_clean_record": " 清空搜索记录 "
+  "action_clean_record": " 清空搜索记录 ",
+  "menu_ask": "问答",
+  "menu_square": "广场"
 }

@@ -33,5 +33,7 @@
   "tips_search_hint": "Enter keywords, separate multiple keywords with spaces",
   "hot_search": "hot search",
   "history_search": "history search",
-  "action_clean_record": " clean records "
+  "action_clean_record": " clean records ",
+  "menu_ask": "ask",
+  "menu_square": "square"
 }

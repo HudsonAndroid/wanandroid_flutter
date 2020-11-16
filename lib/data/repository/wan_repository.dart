@@ -35,6 +35,8 @@ class Api {
   static const String NAVIGATION_LIST = "https://www.wanandroid.com/navi/json";
   static const String HOT_SEARCH_WORD = "https://www.wanandroid.com/hotkey/json";
   static const String SEARCH_RESULT = "https://www.wanandroid.com/article/query/{pageNo}/json";
+  static const String ASK_ARTICLE = "https://www.wanandroid.com/wenda/list/{pageNo}/json";
+  static const String SQUARE_ARTICLE = "https://www.wanandroid.com/user_article/list/{pageNo}/json";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -259,4 +261,19 @@ class WanRepository {
         .replaceAll('{pageNo}', pageNo.toString()), data: formData);
     return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
   }
+
+  // 问答文章
+  Future<ArticleListWrapper> getAskArticle(int pageNo) async {
+    var response = await (await dio).get(Api.ASK_ARTICLE
+        .replaceAll('{pageNo}', pageNo.toString()));
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 广场文章
+  Future<ArticleListWrapper> getSquareArticle(int pageNo) async {
+    var response = await (await dio).get(Api.SQUARE_ARTICLE
+        .replaceAll('{pageNo}', pageNo.toString()));
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
 }
