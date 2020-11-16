@@ -37,10 +37,15 @@ class MyApp extends StatelessWidget {
         // 此处由于我们APP整体配置已经配置了zh和en的语言类型，
         // 因此针对SmartRefresher的不需要重复配置
         supportedLocales: S.delegate.supportedLocales,
-        title: 'Flutter Demo',
+        title: 'WanAndroid Flutter', // 注意：这里无法使用国际化工具,S.of(context)返回的是null
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+            primarySwatch: Colors.blue,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            unselectedWidgetColor: Colors.black87
+        ),
+        darkTheme: ThemeData.dark().copyWith(
+          unselectedWidgetColor: Colors.grey,
+
         ),
         home: PageContainer(),
       ),

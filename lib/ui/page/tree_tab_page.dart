@@ -33,9 +33,9 @@ class _TreeTabPageState extends State<TreeTabPage> with SingleTickerProviderStat
               Tab(text: S.of(context).tree_sub_navi,)
             ],
             controller: _tabController,
-            unselectedLabelColor:  Colors.black,
-            labelColor: Theme.of(context).primaryColor,
-            indicatorColor: Theme.of(context).primaryColor,
+            unselectedLabelColor:  Theme.of(context).unselectedWidgetColor,
+            labelColor: Theme.of(context).textSelectionHandleColor,
+            indicatorColor: Theme.of(context).textSelectionHandleColor,
             indicatorSize: TabBarIndicatorSize.tab,
           ),
         ),

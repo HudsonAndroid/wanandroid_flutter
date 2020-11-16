@@ -108,7 +108,7 @@ class ArticleState extends State<Article> {
                   Html(
                     padding: EdgeInsets.fromLTRB(6.0, 5.0, 6.0, 0),
                     data: widget._article.title,
-                    defaultTextStyle: TextStyle(fontSize: 16.0, color: Colors.black),
+                    defaultTextStyle: TextStyle(fontSize: 16.0),
                   ),
                   // 分类部分
                   Row(

@@ -85,9 +85,9 @@ class _CommonTabPageState extends State<CommonTabPage> with SingleTickerProvider
                     return Tab(text: categories[index].name,);
                   }),
                   controller: _tabController,
-                  unselectedLabelColor:  Colors.black,
-                  labelColor: Theme.of(context).primaryColor,
-                  indicatorColor: Theme.of(context).primaryColor,
+                  unselectedLabelColor:  Theme.of(context).unselectedWidgetColor,
+                  labelColor: Theme.of(context).textSelectionHandleColor,
+                  indicatorColor: Theme.of(context).textSelectionHandleColor,
                   indicatorSize: TabBarIndicatorSize.tab,
                 ),
               ),

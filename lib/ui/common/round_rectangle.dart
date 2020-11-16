@@ -14,7 +14,7 @@ class RoundRectangle extends StatelessWidget{
     this.radius,
     this.borderColor = Colors.deepOrange,
     @required this.text,
-    this.textColor = Colors.black,
+    this.textColor,
     this.margin,
     this.padding
   });
