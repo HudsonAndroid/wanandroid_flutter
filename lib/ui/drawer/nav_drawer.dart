@@ -8,6 +8,7 @@ import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/page/login_page.dart';
 import 'package:wanandroid_flutter/ui/page/sidemenu/article_page_with_toolbar.dart';
+import 'package:wanandroid_flutter/ui/page/sidemenu/setting_page.dart';
 
 /// 侧边栏
 /// 参考：https://medium.com/@maffan/how-to-create-a-side-menu-in-flutter-a2df7833fdfb
@@ -145,7 +146,11 @@ class NavDrawer extends StatelessWidget {
             title: Text(S
                 .of(context)
                 .sideMenuSettings),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => SettingPage()));
+            },
           ),
           _getLogoutMenu(context, accountModel)
         ],

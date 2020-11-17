@@ -35,5 +35,10 @@
   "history_search": "历史搜索",
   "action_clean_record": " 清空搜索记录 ",
   "menu_ask": "问答",
-  "menu_square": "广场"
+  "menu_square": "广场",
+  "theme_mode_light": "白天模式",
+  "theme_mode_dark": "夜间模式",
+  "theme_mode_system": "跟随系统",
+  "action_switch_theme": "切换主题",
+  "setting_app_theme": "应用主题"
 }
