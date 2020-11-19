@@ -12,6 +12,7 @@ import 'package:wanandroid_flutter/data/entity/category.dart';
 import 'package:wanandroid_flutter/data/entity/navigation_item.dart';
 import 'package:wanandroid_flutter/data/entity/search_word.dart';
 import 'package:wanandroid_flutter/data/entity/user_info.dart';
+import 'package:wanandroid_flutter/data/entity/user_score.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/entity/wan_banner.dart';
 
@@ -37,6 +38,8 @@ class Api {
   static const String SEARCH_RESULT = "https://www.wanandroid.com/article/query/{pageNo}/json";
   static const String ASK_ARTICLE = "https://www.wanandroid.com/wenda/list/{pageNo}/json";
   static const String SQUARE_ARTICLE = "https://www.wanandroid.com/user_article/list/{pageNo}/json";
+  static const String CURRENT_USER_SCORE = "https://www.wanandroid.com/lg/coin/userinfo/json";
+  static const String USER_SCORE_RANK = "https://www.wanandroid.com/coin/rank/{pageNo}/json";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -274,6 +277,19 @@ class WanRepository {
     var response = await (await dio).get(Api.SQUARE_ARTICLE
         .replaceAll('{pageNo}', pageNo.toString()));
     return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  //获取账号积分情况
+  Future<UserScore> getCurrentUserScore() async {
+    var response = await (await dio).get(Api.CURRENT_USER_SCORE);
+    return CurrentUserScore.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取积分榜
+  Future<UserScoreRank> getUserScoreRank(int pageNo) async {
+    var response = await (await dio).get(Api.USER_SCORE_RANK
+        .replaceAll('{pageNo}', pageNo.toString()));
+    return UserScoreRankWrapper.fromJson(jsonDecode(response.toString())).data;
   }
 
 }
