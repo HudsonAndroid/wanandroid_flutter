@@ -40,6 +40,8 @@ class Api {
   static const String SQUARE_ARTICLE = "https://www.wanandroid.com/user_article/list/{pageNo}/json";
   static const String CURRENT_USER_SCORE = "https://www.wanandroid.com/lg/coin/userinfo/json";
   static const String USER_SCORE_RANK = "https://www.wanandroid.com/coin/rank/{pageNo}/json";
+  static const String STAR_ARTICLE_RESULT = "https://www.wanandroid.com/lg/collect/list/{pageNo}/json";
+  static const String UN_STAR_ARTICLE_STAR_ID = "https://www.wanandroid.com/lg/uncollect/{id}/json";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -290,6 +292,24 @@ class WanRepository {
     var response = await (await dio).get(Api.USER_SCORE_RANK
         .replaceAll('{pageNo}', pageNo.toString()));
     return UserScoreRankWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取收藏文章实例列表
+  Future<StarArticleListWrapper> getStarArticlesResult(int pageNo) async {
+    var response = await (await dio).get(Api.STAR_ARTICLE_RESULT
+        .replaceAll('{pageNo}', pageNo.toString()));
+    return StarArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 取消收藏，需要使用收藏接口获取的StarArticle的数据来操作
+  // 其中StarArticle的originId对应了普通文章的id，但可能会为空
+  Future<BaseResult> unStarArticleByStarId(int starId, int originId) async {
+    FormData formData = FormData.fromMap({
+      "originId": originId,
+    });
+    var response = await (await dio).post(Api.UN_STAR_ARTICLE_STAR_ID
+        .replaceAll('{id}', starId.toString()), data: formData);
+    return BaseResult.fromJson(jsonDecode(response.toString()));
   }
 
 }
