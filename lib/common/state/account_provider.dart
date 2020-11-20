@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
 import 'package:wanandroid_flutter/data/entity/user_info.dart';
+import 'package:wanandroid_flutter/data/entity/user_score.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 
 /// 账号系统，目前收藏的列表是通过SharedPreferences存储的，更合理的操作的话，应该让
@@ -15,7 +16,9 @@ import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 class AccountProvider with ChangeNotifier {
   static const String KEY_LOGIN_CACHE = "login_cache";
   static const String KEY_LAST_LOGIN_USER = "last_login";
+  static const String KEY_SCORE_CACHE = "score_cache";
   UserInfo userInfo;
+  UserScore userScore;
 
   AccountProvider(){
     initUserInfo();
@@ -101,6 +104,34 @@ class AccountProvider with ChangeNotifier {
     if(userInfo == null) return ;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(KEY_LOGIN_CACHE, jsonEncode(userInfo));
+  }
+
+  /// 获取用户积分情况
+  Future<UserScore> getUserScore({bool forceUpdate = false}) async {
+    if(!isLogin()) return null;
+    if(userScore != null && !forceUpdate) return userScore;
+    // try to fetch network data
+    try{
+      UserScore score = await WanRepository().getCurrentUserScore();
+      if(score != null){
+        // save it if fetch successfully
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(userInfo.id.toString(), jsonEncode(score));
+        userScore = score;
+      }
+      return score;
+    }catch(e){
+      print(e);
+      // if fetch failed, try to check SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var result = prefs.getString(userInfo.id.toString());
+      if(result == null) return null;
+      UserScore score = UserScore.fromJson(jsonDecode(result));
+      if(score != null){
+        userScore = score;
+      }
+      return score;
+    }
   }
 
   isLogin() => userInfo != null;

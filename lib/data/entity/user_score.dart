@@ -15,6 +15,14 @@ class UserScore {
       rank = json['rank'],
       username = json['username'],
       userId = json['userId'];
+
+  Map<String, dynamic> toJson() => {
+    'coinCount': coinCount,
+    'level': level,
+    'rank': rank,
+    'userId': userId,
+    'username': username,
+  };
 }
 
 class CurrentUserScore extends BaseResult {

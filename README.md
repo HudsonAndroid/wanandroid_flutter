@@ -134,6 +134,30 @@ Provider可以说是InheritedWidget的一种升级，是保证简洁化向子Wid
 的对应user的.gradle目录下，由哈希值命名的文件夹内部就是了），这样我们才能正常运行起来。
 
 
+## 附：
+大部分情况下，有状态的Widget基本上是固定的样式，因此最好通过Android Studio的Live Templates配置以便省略固定代码格式。
+(File -> Settings -> 搜索Live Templates -> 找到Dart -> 点击右侧增加Live Templates -> 在出现的编辑框的下方输入
+名字[后面快速编码的缩写名，类似android中的fv生成findViewById快捷方式],在下方定义选择dart，并输入如下代码，这样下次
+编写类似固定格式时即可省略不必要的编写过程)。
+
+    import 'package:flutter/material.dart';
+
+    class $CLASS$ extends StatefulWidget {
+
+        @override
+        _$CLASS$State createState() => _$CLASS$State();
+
+    }
+
+    class _$CLASS$State extends State<$CLASS$> {
+
+        @override
+        Widget build(BuildContext context) {
+            //  TODO: implement build
+            throw UnimplementedError();
+        }
+    }
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
