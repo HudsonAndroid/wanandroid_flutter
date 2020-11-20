@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
+import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/common/list_page_wrapper.dart';
 
 class RankPage extends StatelessWidget {
@@ -9,14 +10,14 @@ class RankPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text('积分排行榜'),
+            title: Text(S.of(context).score_rank_page),
         ),
         body: ListPageWrapper(
             startPage: 0,
             loadPage: (int pageNo){
                 return WanRepository().getUserScoreRank(pageNo);
             },
-            itemWidgetHolder: (index, entity) {
+            itemWidgetHolder: (index, entity, {OnItemDelete onItemDelete}) {
                 var textStyle = _getHonourStyle(index);
                 return Container(
                   height: 60,

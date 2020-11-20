@@ -454,6 +454,26 @@ class S {
       args: [],
     );
   }
+
+  /// `我的收藏`
+  String get my_star_article_page {
+    return Intl.message(
+      '我的收藏',
+      name: 'my_star_article_page',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `积分排行榜`
+  String get score_rank_page {
+    return Intl.message(
+      '积分排行榜',
+      name: 'score_rank_page',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

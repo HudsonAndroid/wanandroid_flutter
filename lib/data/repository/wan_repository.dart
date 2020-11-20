@@ -40,7 +40,6 @@ class Api {
   static const String SQUARE_ARTICLE = "https://www.wanandroid.com/user_article/list/{pageNo}/json";
   static const String CURRENT_USER_SCORE = "https://www.wanandroid.com/lg/coin/userinfo/json";
   static const String USER_SCORE_RANK = "https://www.wanandroid.com/coin/rank/{pageNo}/json";
-  static const String STAR_ARTICLE_RESULT = "https://www.wanandroid.com/lg/collect/list/{pageNo}/json";
   static const String UN_STAR_ARTICLE_STAR_ID = "https://www.wanandroid.com/lg/uncollect/{id}/json";
 }
 
@@ -198,9 +197,10 @@ class WanRepository {
     return BaseResult.fromJson(jsonDecode(response.toString()));
   }
 
-  Future<StarArticleResultWrapper> getStarArticles(int pageNo) async {
+  // 获取收藏文章实例列表
+  Future<StarArticleListWrapper> getStarArticles(int pageNo) async {
     var response = await (await dio).get(Api.STAR_ARTICLES.replaceAll('{pageNo}', pageNo.toString()));
-    return StarArticleResultWrapper.fromJson(jsonDecode(response.toString()));
+    return StarArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
   }
 
   // 获取微信tab分类列表（不包含页面数据）
@@ -292,13 +292,6 @@ class WanRepository {
     var response = await (await dio).get(Api.USER_SCORE_RANK
         .replaceAll('{pageNo}', pageNo.toString()));
     return UserScoreRankWrapper.fromJson(jsonDecode(response.toString())).data;
-  }
-
-  // 获取收藏文章实例列表
-  Future<StarArticleListWrapper> getStarArticlesResult(int pageNo) async {
-    var response = await (await dio).get(Api.STAR_ARTICLE_RESULT
-        .replaceAll('{pageNo}', pageNo.toString()));
-    return StarArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
   }
 
   // 取消收藏，需要使用收藏接口获取的StarArticle的数据来操作

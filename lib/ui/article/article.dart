@@ -10,6 +10,8 @@ import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/common/round_rectangle.dart';
 import 'package:wanandroid_flutter/ui/page/login_page.dart';
 
+/// 文章列表的一项   不能改为StatelessWidget，因为收藏变动时AccountProvider并没有
+/// 通知，而是Article这边主动触发获取状态的
 class Article extends StatefulWidget {
   final WanArticle _article;
 
@@ -19,7 +21,6 @@ class Article extends StatefulWidget {
   State<StatefulWidget> createState() => ArticleState();
 }
 
-/// 文章列表的一项
 class ArticleState extends State<Article> {
 
   /// 创建文章图片

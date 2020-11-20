@@ -118,6 +118,7 @@ class AccountProvider with ChangeNotifier {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString(userInfo.id.toString(), jsonEncode(score));
         userScore = score;
+        notifyListeners();
       }
       return score;
     }catch(e){
@@ -129,6 +130,7 @@ class AccountProvider with ChangeNotifier {
       UserScore score = UserScore.fromJson(jsonDecode(result));
       if(score != null){
         userScore = score;
+        notifyListeners();
       }
       return score;
     }

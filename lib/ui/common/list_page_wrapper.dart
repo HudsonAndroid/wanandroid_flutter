@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:wanandroid_flutter/common/common_const_var.dart';
 import 'package:wanandroid_flutter/ui/common/page_wrapper.dart';
 
 /// 加载一页数据； 确保返回的结果是列表的一页数据类型
@@ -14,7 +15,10 @@ typedef GetPageListEntities = dynamic Function(dynamic pageWrapper);
 /// 根据页数据实体判定是否还有更多数据
 typedef PageHasMore = bool Function(dynamic pageWrapper);
 /// 构建一项的Widget
-typedef ItemWidgetHolder = Widget Function(int index, dynamic entity);
+typedef ItemWidgetHolder = Widget Function(int index, dynamic entity, {OnItemDelete onItemDelete});
+typedef OnItemDelete = void Function(int index);
+/// 外界控制者尝试同步删除操作，bool返回true表示同步删除成功，否则失败
+typedef TryToDelete = Future<bool> Function(int index, dynamic entity);
 
 /// 统一列表页面，支持下拉刷新、上拉加载更多、显示加载情况和重试方案
 /// 参数中 [startPage]用于指示列表加载的起始pageNo，因为部分功能
@@ -30,6 +34,7 @@ class ListPageWrapper extends StatefulWidget {
   final PageNoIncrementStrategy strategy;
   final GetPageListEntities getPageListEntities;
   final PageHasMore pageHasMore;
+  final TryToDelete tryToDelete;
 
   ListPageWrapper({
     Key key,
@@ -38,7 +43,8 @@ class ListPageWrapper extends StatefulWidget {
     @required this.itemWidgetHolder,
     this.strategy,
     this.getPageListEntities,
-    this.pageHasMore
+    this.pageHasMore,
+    this.tryToDelete
   }) : assert(loadPage != null),
         super(key: key);
 
@@ -63,10 +69,6 @@ class _ListPageWrapperState extends State<ListPageWrapper> {
     _refreshController = RefreshController();
     super.initState();
   }
-
-  // int _defaultIncrementStrategy() {
-  //   retrun
-  // }
 
   _loadPageData() async {
     if(!hasMore) return ;
@@ -102,6 +104,28 @@ class _ListPageWrapperState extends State<ListPageWrapper> {
     _loadPageData();
   }
 
+  onItemDelete(int index) async {
+    // 删除
+    var entity = listEntities[index];
+    setState(() {
+      listEntities.removeAt(index);
+    });
+    if(widget.tryToDelete != null){
+      bool success = await widget.tryToDelete(index, entity);
+      print('是否成功$success');
+      if(!success){
+        // Outer controller delete failed, we should recover it and notify user.
+        setState(() {
+          listEntities.insert(index, entity);
+        });
+        Scaffold.of(context).showSnackBar(SnackBar(
+          duration: const Duration(milliseconds: ConstVar.COMMON_SNACK_BAR_DURATION),
+          content: Text("抱歉，删除失败！"),
+        ));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -122,7 +146,7 @@ class _ListPageWrapperState extends State<ListPageWrapper> {
                         (BuildContext context, int index){
                       final int itemIndex = index ~/ 2;
                       if(index.isEven){
-                        return widget.itemWidgetHolder(itemIndex, listEntities[itemIndex]);
+                        return widget.itemWidgetHolder(itemIndex, listEntities[itemIndex], onItemDelete: onItemDelete);
                       }
                       return Divider(height: 0, color: Colors.grey,);
                     },

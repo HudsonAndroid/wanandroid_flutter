@@ -40,5 +40,7 @@
   "theme_mode_dark": "dark mode",
   "theme_mode_system": "follow system",
   "action_switch_theme": "switch theme",
-  "setting_app_theme": "app theme"
+  "setting_app_theme": "app theme",
+  "my_star_article_page": "我的收藏",
+  "score_rank_page": "积分排行榜"
 }

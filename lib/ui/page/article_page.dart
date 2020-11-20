@@ -33,7 +33,7 @@ class ArticlePage extends StatelessWidget {
     return ListPageWrapper(
       startPage: startPage,
       loadPage: loadArticle,
-      itemWidgetHolder: (index, entity){
+      itemWidgetHolder: (index, entity, {OnItemDelete onItemDelete}){
         return Article(entity);
       },
       strategy: (int localPage, int serverPageNo){

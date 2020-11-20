@@ -12,6 +12,7 @@ import 'package:wanandroid_flutter/ui/drawer/custom_drawer_header.dart';
 import 'package:wanandroid_flutter/ui/page/login_page.dart';
 import 'package:wanandroid_flutter/ui/page/sidemenu/article_page_with_toolbar.dart';
 import 'package:wanandroid_flutter/ui/page/sidemenu/setting_page.dart';
+import 'package:wanandroid_flutter/ui/page/star_page.dart';
 
 /// 侧边栏
 /// 参考：https://medium.com/@maffan/how-to-create-a-side-menu-in-flutter-a2df7833fdfb
@@ -68,6 +69,22 @@ class NavDrawer extends StatelessWidget {
     }
   }
 
+  Widget _getStarMenu(BuildContext context, AccountProvider accountModel){
+    if (accountModel.isLogin()) {
+      return ListTile(
+        leading: Icon(Icons.star),
+        title: Text(S.of(context).my_star_article_page),
+        onTap: () {
+          Navigator.of(context).pop();
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => StarPage()));
+        },
+      );
+    } else {
+      return Container();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     AccountProvider accountModel = Provider.of<AccountProvider>(context);
@@ -77,6 +94,7 @@ class NavDrawer extends StatelessWidget {
         children: <Widget>[
           CustomDrawerHeader(),
           _getLoginMenu(context, accountModel),
+          _getStarMenu(context, accountModel),
           ListTile( // 问答
             leading: Icon(Icons.mouse),
             title: Text(S
