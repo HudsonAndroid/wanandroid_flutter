@@ -5,7 +5,7 @@ import 'package:wanandroid_flutter/data/entity/base_result.dart';
 class UserScore {
   int coinCount;
   int level;
-  int rank;
+  String rank;
   int userId;
   String username;
 
