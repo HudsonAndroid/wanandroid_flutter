@@ -8,7 +8,11 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wanandroid_flutter/data/entity/base_result.dart';
+import 'package:wanandroid_flutter/data/entity/category.dart';
+import 'package:wanandroid_flutter/data/entity/navigation_item.dart';
+import 'package:wanandroid_flutter/data/entity/search_word.dart';
 import 'package:wanandroid_flutter/data/entity/user_info.dart';
+import 'package:wanandroid_flutter/data/entity/user_score.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
 import 'package:wanandroid_flutter/data/entity/wan_banner.dart';
 
@@ -23,6 +27,20 @@ class Api {
   static const String STAR_ARTICLE = "https://www.wanandroid.com/lg/collect/{id}/json";
   static const String UN_STAR_ARTICLE = "https://www.wanandroid.com/lg/uncollect_originId/{id}/json";
   static const String STAR_ARTICLES = "https://www.wanandroid.com/lg/collect/list/{pageNo}/json";
+  static const String WX_CATEGORY = "https://www.wanandroid.com/wxarticle/chapters/json";
+  static const String WX_ARTICLE = "https://www.wanandroid.com/wxarticle/list/{wechatId}/{pageNo}/json";
+  static const String PROJECT_CATEGORY = "https://www.wanandroid.com/project/tree/json";
+  static const String PROJECT_ARTICLE = "https://www.wanandroid.com/article/list/{pageNo}/json";
+  static const String TREE_CATEGORY = "https://www.wanandroid.com/tree/json";
+  static const String TREE_ARTICLE = "https://www.wanandroid.com/article/list/{pageNo}/json";
+  static const String NAVIGATION_LIST = "https://www.wanandroid.com/navi/json";
+  static const String HOT_SEARCH_WORD = "https://www.wanandroid.com/hotkey/json";
+  static const String SEARCH_RESULT = "https://www.wanandroid.com/article/query/{pageNo}/json";
+  static const String ASK_ARTICLE = "https://www.wanandroid.com/wenda/list/{pageNo}/json";
+  static const String SQUARE_ARTICLE = "https://www.wanandroid.com/user_article/list/{pageNo}/json";
+  static const String CURRENT_USER_SCORE = "https://www.wanandroid.com/lg/coin/userinfo/json";
+  static const String USER_SCORE_RANK = "https://www.wanandroid.com/coin/rank/{pageNo}/json";
+  static const String UN_STAR_ARTICLE_STAR_ID = "https://www.wanandroid.com/lg/uncollect/{id}/json";
 }
 
 // 由于WanAndroid服务端请求会返回一个SessionId（会话id）【本APP中运行时每次请求后，服务端并没有返回新的SessionId，在PostMan中试验时会返回新的SessionId】，
@@ -179,8 +197,112 @@ class WanRepository {
     return BaseResult.fromJson(jsonDecode(response.toString()));
   }
 
-  Future<StarArticleResultWrapper> getStarArticles(int pageNo) async {
+  // 获取收藏文章实例列表
+  Future<StarArticleListWrapper> getStarArticles(int pageNo) async {
     var response = await (await dio).get(Api.STAR_ARTICLES.replaceAll('{pageNo}', pageNo.toString()));
-    return StarArticleResultWrapper.fromJson(jsonDecode(response.toString()));
+    return StarArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
   }
+
+  // 获取微信tab分类列表（不包含页面数据）
+  Future<List<Category>> getWxCategory() async {
+    var response = await (await dio).get(Api.WX_CATEGORY);
+    return CategoryWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取微信文章列表
+  Future<ArticleListWrapper> getWxArticles(int wechatId, int pageNo) async {
+    var response = await (await dio).get(Api.WX_ARTICLE
+          .replaceAll('{wechatId}', wechatId.toString())
+          .replaceAll('{pageNo}', pageNo.toString()));
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取项目tab分类列表（不包含页面数据）
+  Future<List<Category>> getProjectCategory() async {
+    var response = await (await dio).get(Api.PROJECT_CATEGORY);
+    return CategoryWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取项目文章列表
+  Future<ArticleListWrapper> getProjectArticles(int projectId, int pageNo) async {
+    var response = await (await dio).get(
+        Api.PROJECT_ARTICLE.replaceAll('{pageNo}', pageNo.toString()),
+        queryParameters: {'cid': projectId}
+    );
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取体系列表
+  Future<CategoryWrapper> getTreeCategory() async {
+    var response = await (await dio).get(Api.TREE_CATEGORY);
+    return CategoryWrapper.fromJson(jsonDecode(response.toString()));
+  }
+
+  // 获取指定体系的文章列表
+  Future<ArticleListWrapper> getTreeArticles(int treeId, int pageNo) async {
+    var response = await (await dio).get(
+        Api.TREE_ARTICLE.replaceAll('{pageNo}', pageNo.toString()),
+        queryParameters: {'cid': treeId}
+    );
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取导航结果列表
+  Future<NavigationWrapper> getNavigationList() async {
+    var response = await (await dio).get(Api.NAVIGATION_LIST);
+    return NavigationWrapper.fromJson(jsonDecode(response.toString()));
+  }
+
+  Future<List<SearchWord>> getHotSearch() async {
+    var response = await (await dio).get(Api.HOT_SEARCH_WORD);
+    return SearchWordWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  Future<ArticleListWrapper> getSearchResult(String word, int pageNo) async {
+    FormData formData = FormData.fromMap({
+      "k": word,
+    });
+    var response = await (await dio).post(Api.SEARCH_RESULT
+        .replaceAll('{pageNo}', pageNo.toString()), data: formData);
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 问答文章
+  Future<ArticleListWrapper> getAskArticle(int pageNo) async {
+    var response = await (await dio).get(Api.ASK_ARTICLE
+        .replaceAll('{pageNo}', pageNo.toString()));
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 广场文章
+  Future<ArticleListWrapper> getSquareArticle(int pageNo) async {
+    var response = await (await dio).get(Api.SQUARE_ARTICLE
+        .replaceAll('{pageNo}', pageNo.toString()));
+    return ArticleResultWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  //获取账号积分情况
+  Future<UserScore> getCurrentUserScore() async {
+    var response = await (await dio).get(Api.CURRENT_USER_SCORE);
+    return CurrentUserScore.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 获取积分榜
+  Future<UserScoreRank> getUserScoreRank(int pageNo) async {
+    var response = await (await dio).get(Api.USER_SCORE_RANK
+        .replaceAll('{pageNo}', pageNo.toString()));
+    return UserScoreRankWrapper.fromJson(jsonDecode(response.toString())).data;
+  }
+
+  // 取消收藏，需要使用收藏接口获取的StarArticle的数据来操作
+  // 其中StarArticle的originId对应了普通文章的id，但可能会为空
+  Future<BaseResult> unStarArticleByStarId(int starId, int originId) async {
+    FormData formData = FormData.fromMap({
+      "originId": originId,
+    });
+    var response = await (await dio).post(Api.UN_STAR_ARTICLE_STAR_ID
+        .replaceAll('{id}', starId.toString()), data: formData);
+    return BaseResult.fromJson(jsonDecode(response.toString()));
+  }
+
 }

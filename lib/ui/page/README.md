@@ -11,3 +11,13 @@
 
 ## 侧边栏
 见[这篇文章](https://medium.com/@maffan/how-to-create-a-side-menu-in-flutter-a2df7833fdfb)
+
+## 包结构说明
+ - search包是与搜索功能相关的page页面
+ - sidemenu包是侧边栏功能相关的page页面
+ - tree包是体系tab栏中的page页面
+ - tree_tab_page是tree功能tab在APP首页BottomNavigationBar中的一项
+ - article_page是所有包含文章列表页面的统一，支持下拉刷新，上拉加载更多，加载指示器（失败重试方案）等逻辑
+ - common_tab_page是所有包含顶部tab栏页面的统一
+ - home_page是主页， home_page_deprecated是未使用SmartRefresher实现的上拉加载更多的实现方案，未使用
+ - login_page和register_page是登录和注册页面

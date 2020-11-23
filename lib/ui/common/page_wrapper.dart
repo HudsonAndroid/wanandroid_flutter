@@ -15,6 +15,8 @@ class PageWrapper extends StatefulWidget {
   final VoidCallback onLoading;
   final Widget child;
   final LoadState loadState;
+  final bool enablePullUp;
+  final bool enablePullDown;
 
   PageWrapper({
     Key key,
@@ -23,7 +25,9 @@ class PageWrapper extends StatefulWidget {
     this.onLoading,
     this.child,
     AsyncSnapshot snapshot,
-    bool isLoadMore
+    bool isLoadMore,
+    this.enablePullUp = true,
+    this.enablePullDown = true
   }):
     loadState = analyseLoadState(snapshot, isLoadMore),
     super(key: key);
@@ -46,7 +50,8 @@ class _PageWrapperState extends State<PageWrapper> {
             onRefresh: widget.onRefresh,
             onLoading: widget.onLoading,
             child: widget.child,
-            enablePullUp: true, // 允许上拉刷新
+            enablePullDown: widget.enablePullDown,
+            enablePullUp: widget.enablePullUp, // 是否允许上拉刷新
           ),
           // 注意先后顺序，放前面的话，点击事件无法触发
           _LoadStateIndicator(widget.loadState, refreshOpt: widget.onRefresh,),

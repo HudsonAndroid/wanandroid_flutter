@@ -294,6 +294,226 @@ class S {
       args: [],
     );
   }
+
+  /// `ProjectArticle`
+  String get projectPage {
+    return Intl.message(
+      'ProjectArticle',
+      name: 'projectPage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `tree`
+  String get tree_sub_tree {
+    return Intl.message(
+      'tree',
+      name: 'tree_sub_tree',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `navigation`
+  String get tree_sub_navi {
+    return Intl.message(
+      'navigation',
+      name: 'tree_sub_navi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tree`
+  String get treePage {
+    return Intl.message(
+      'Tree',
+      name: 'treePage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `search`
+  String get action_search {
+    return Intl.message(
+      'search',
+      name: 'action_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter keywords, separate multiple keywords with spaces`
+  String get tips_search_hint {
+    return Intl.message(
+      'Enter keywords, separate multiple keywords with spaces',
+      name: 'tips_search_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `hot search`
+  String get hot_search {
+    return Intl.message(
+      'hot search',
+      name: 'hot_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `history search`
+  String get history_search {
+    return Intl.message(
+      'history search',
+      name: 'history_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` clean records `
+  String get action_clean_record {
+    return Intl.message(
+      ' clean records ',
+      name: 'action_clean_record',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ask`
+  String get menu_ask {
+    return Intl.message(
+      'ask',
+      name: 'menu_ask',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `square`
+  String get menu_square {
+    return Intl.message(
+      'square',
+      name: 'menu_square',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `light mode`
+  String get theme_mode_light {
+    return Intl.message(
+      'light mode',
+      name: 'theme_mode_light',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `dark mode`
+  String get theme_mode_dark {
+    return Intl.message(
+      'dark mode',
+      name: 'theme_mode_dark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `follow system`
+  String get theme_mode_system {
+    return Intl.message(
+      'follow system',
+      name: 'theme_mode_system',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `switch theme`
+  String get action_switch_theme {
+    return Intl.message(
+      'switch theme',
+      name: 'action_switch_theme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `app theme`
+  String get setting_app_theme {
+    return Intl.message(
+      'app theme',
+      name: 'setting_app_theme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `my stars`
+  String get my_star_article_page {
+    return Intl.message(
+      'my stars',
+      name: 'my_star_article_page',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `score rank board`
+  String get score_rank_page {
+    return Intl.message(
+      'score rank board',
+      name: 'score_rank_page',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delete`
+  String get action_delete {
+    return Intl.message(
+      'delete',
+      name: 'action_delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sorry, delete failed!`
+  String get tips_delete_failed {
+    return Intl.message(
+      'Sorry, delete failed!',
+      name: 'tips_delete_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `gallery`
+  String get image_source_gallery {
+    return Intl.message(
+      'gallery',
+      name: 'image_source_gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `camera`
+  String get image_source_camera {
+    return Intl.message(
+      'camera',
+      name: 'image_source_camera',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

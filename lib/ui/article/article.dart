@@ -10,6 +10,8 @@ import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/common/round_rectangle.dart';
 import 'package:wanandroid_flutter/ui/page/login_page.dart';
 
+/// 文章列表的一项   不能改为StatelessWidget，因为收藏变动时AccountProvider并没有
+/// 通知，而是Article这边主动触发获取状态的
 class Article extends StatefulWidget {
   final WanArticle _article;
 
@@ -19,18 +21,22 @@ class Article extends StatefulWidget {
   State<StatefulWidget> createState() => ArticleState();
 }
 
-/// 文章列表的一项
 class ArticleState extends State<Article> {
 
   /// 创建文章图片
   Widget buildIcon(String imgLink) {
     if(imgLink?.isNotEmpty == true){
+
       return Container(
         width: 115,
-        child: FadeInImage.memoryNetwork(
-          placeholder: kTransparentImage,
-          image: imgLink,
-          fit: BoxFit.fill,
+        margin: EdgeInsets.only(left: 10, right: 10),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image: imgLink,
+            fit: BoxFit.fill,
+          ),
         ),
       );
     }
@@ -40,7 +46,10 @@ class ArticleState extends State<Article> {
   /// 决定是否创建新文章标识
   Widget buildNewFlag(bool isNew){
     if(isNew){
-      return RoundRectangle(radius: 6.0, color: Colors.red, text: S.of(context).flag_new);
+      return RoundRectangle(borderColor: Colors.red,
+          margin: EdgeInsets.fromLTRB(6.0, 2.0, 3.0, 2.0),
+          padding: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
+          textColor: Colors.red, text: S.of(context).flag_new);
     }
     return Container();
   }
@@ -48,7 +57,10 @@ class ArticleState extends State<Article> {
   /// 决定是否创建置顶标识
   Widget buildTopFlag(bool isTop){
     if(isTop){
-      return RoundRectangle(radius: 6.0, color: Colors.purple, text: S.of(context).flag_top,);
+      return RoundRectangle(borderColor: Colors.purple,
+          margin: EdgeInsets.fromLTRB(6.0, 2.0, 3.0, 2.0),
+          padding: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
+          textColor: Colors.purple, text: S.of(context).flag_top,);
     }
     return Container();
   }
@@ -97,7 +109,7 @@ class ArticleState extends State<Article> {
                   Html(
                     padding: EdgeInsets.fromLTRB(6.0, 5.0, 6.0, 0),
                     data: widget._article.title,
-                    defaultTextStyle: TextStyle(fontSize: 16.0, color: Colors.black),
+                    defaultTextStyle: TextStyle(fontSize: 16.0),
                   ),
                   // 分类部分
                   Row(
@@ -108,7 +120,7 @@ class ArticleState extends State<Article> {
                           data: widget._article.superChapterName + "/" + widget._article.chapterName,
                           defaultTextStyle: TextStyle(fontSize: 13.0, color: Colors.grey),
                         ),
-                        width: 250,
+                        width: 180,
                       ),
                       Expanded(child: SizedBox()),
                       IconButton(

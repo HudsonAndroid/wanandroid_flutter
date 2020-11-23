@@ -1,8 +1,13 @@
 # wanandroid_flutter
 
-wanandroid flutter version
+wanandroid flutter版本，android版APK包[下载地址](/android/app/release/app-release.apk)
 
-# 包结构说明
+## UI展示
+<img src="displayImages/home.jpg" width="320" alt="主页夜间模式"/>  <img src="displayImages/lightMode.jpg" width="320" alt="白天模式-项目"/>
+<img src="displayImages/sideMenu.jpg" width="320" alt="侧边栏"/>  <img src="displayImages/search_record.jpg" width="320" alt="搜索页面夜间模式"/>
+<img src="displayImages/lightSearch.jpg" width="320" alt="搜索白天模式"/>
+
+## 包结构说明
 项目代码整体包结构以视图层和数据层区分开。
 
 视图层(ui包)中包括了所有的与界面元素相关的代码或Widget，其中article包是文章列表的一项视图；banner是滚动轮播的视图；
@@ -17,7 +22,7 @@ common包含了公用视图；drawer是侧边栏视图；page是所有各个页�
 l10n包是由国际化插件[Flutter Intl](https://plugins.jetbrains.com/plugin/13666-flutter-intl)自动生成的包，一般
 情况下不需要修改它们。
 
-# 实践内容
+## 实践内容
 
 ## [Banner实践](/lib/ui/banner)
 
@@ -51,6 +56,10 @@ SmartRefresher新版本比旧版本优化了很多，例如旧版本中加载的
 main.dart和该库的refresh_localizations.dart说明。
 使用SmartRefresher后，列表加载到底部后，我们不再需要手动监听滑动到底部的事件了，直接使用SmartRefresher的onLoading来加载更多数据。
 代码中的经典示例见[统一加载刷新页面](/lib/ui/common/page_wrapper.dart)和具体实现[HomePage](/lib/ui/page/home_page.dart)。
+
+## 图片选择
+请参考Medium上的[这篇文章](https://medium.com/fabcoding/adding-an-image-picker-in-a-flutter-app-pick-images-using-camera-and-gallery-photos-7f016365d856)
+以及[官方地址](https://pub.dev/packages/image_picker)
 
 ## 异步加载状态的显示
 
@@ -111,6 +120,13 @@ Provider可以说是InheritedWidget的一种升级，是保证简洁化向子Wid
 
 更多请参考[StackOverflow上这个回答](https://stackoverflow.com/questions/59898274/flutter-provider-access-via-addpostframecallback-says-widget-is-outside-the-widg)
 
+## 后续可优化或增加的功能
+目前整套APP的结构采用SharedPreferences作为缓存，缓存了包括用户登录信息、用户头像信息等，这些数据体积相对来说较为庞大，并不是十分适合SharedPreferences，
+因此可以考虑后续优化使用[Sqflite](https://pub.dev/packages/sqflite)替换原有方案。
+
+另外，目前整套APP中没有对网络数据进行缓存，因此在没有任何网络的情况下，大部分页面都将会是加载失败状态，后续可以针对[Repository](/lib/data/repository/wan_repository.dart)
+进行升级，增加数据库缓存的逻辑，具体的实现方案可以与[Android kotlin jetpack版本WanAndroid](https://github.com/HudsonAndroid/WanAndroidJetpack)的数据缓存方案类似。
+
 ## 其他问题
 #### 项目报错，提示网络错误
 项目跑起来报错，提示网络问题，类似如下报错：
@@ -133,6 +149,30 @@ Provider可以说是InheritedWidget的一种升级，是保证简洁化向子Wid
 重新运行，flutter命令行会自动帮我们解压结果（注意我们手动解压不行，因为有hash值，所以让flutter帮我们解压，它会解压在c盘
 的对应user的.gradle目录下，由哈希值命名的文件夹内部就是了），这样我们才能正常运行起来。
 
+
+## 附：
+大部分情况下，有状态的Widget基本上是固定的样式，因此最好通过Android Studio的Live Templates配置以便省略固定代码格式。
+(File -> Settings -> 搜索Live Templates -> 找到Dart -> 点击右侧增加Live Templates -> 在出现的编辑框的下方输入
+名字[后面快速编码的缩写名，类似android中的fv生成findViewById快捷方式],在下方定义选择dart，并输入如下代码，这样下次
+编写类似固定格式时即可省略不必要的编写过程)。
+
+    import 'package:flutter/material.dart';
+
+    class $CLASS$ extends StatefulWidget {
+
+        @override
+        _$CLASS$State createState() => _$CLASS$State();
+
+    }
+
+    class _$CLASS$State extends State<$CLASS$> {
+
+        @override
+        Widget build(BuildContext context) {
+            //  TODO: implement build
+            throw UnimplementedError();
+        }
+    }
 
 ## Getting Started
 

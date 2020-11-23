@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:wanandroid_flutter/common/common_const_var.dart';
 import 'package:wanandroid_flutter/common/common_util.dart';
@@ -7,7 +8,11 @@ import 'package:wanandroid_flutter/data/entity/base_result.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/common/round_button.dart';
+import 'package:wanandroid_flutter/ui/drawer/custom_drawer_header.dart';
 import 'package:wanandroid_flutter/ui/page/login_page.dart';
+import 'package:wanandroid_flutter/ui/page/sidemenu/article_page_with_toolbar.dart';
+import 'package:wanandroid_flutter/ui/page/sidemenu/setting_page.dart';
+import 'package:wanandroid_flutter/ui/page/star_page.dart';
 
 /// 侧边栏
 /// 参考：https://medium.com/@maffan/how-to-create-a-side-menu-in-flutter-a2df7833fdfb
@@ -64,28 +69,19 @@ class NavDrawer extends StatelessWidget {
     }
   }
 
-  Widget _getDrawerHeader(BuildContext context, AccountProvider accountModel) {
-    var boldTitleStyle = TextStyle(
-        color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
+  Widget _getStarMenu(BuildContext context, AccountProvider accountModel){
     if (accountModel.isLogin()) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          CircleAvatar(
-            radius: 36.0,
-            backgroundImage: AssetImage(
-                assetsImg('icon_default_user', fileType: 'jpg')),
-          ),
-          SizedBox(width: 20,),
-          Text(accountModel.userInfo.username, style: boldTitleStyle,),
-        ],
+      return ListTile(
+        leading: Icon(Icons.star),
+        title: Text(S.of(context).my_star_article_page),
+        onTap: () {
+          Navigator.of(context).pop();
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => StarPage()));
+        },
       );
     } else {
-      return Center(
-        child: Text(S
-            .of(context)
-            .appName, style: boldTitleStyle, ),
-      );
+      return Container();
     }
   }
 
@@ -96,38 +92,51 @@ class NavDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-                color: Theme
-                    .of(context)
-                    .primaryColor
-            ),
-            child: _getDrawerHeader(context, accountModel),
-            // decoration: BoxDecoration(
-            //   image: AssetImage('assets/images/')
-            // ),
-          ),
+          CustomDrawerHeader(),
           _getLoginMenu(context, accountModel),
+          _getStarMenu(context, accountModel),
           ListTile( // 问答
             leading: Icon(Icons.mouse),
             title: Text(S
                 .of(context)
                 .sideMenuAsk),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ArticlePageWithToolbar(
+                loadArticle: (int pageNo){
+                  return WanRepository().getAskArticle(pageNo);
+                },
+                title: S.of(context).menu_ask,
+              )));
+            },
           ),
           ListTile( // 广场
             leading: Icon(Icons.question_answer),
             title: Text(S
                 .of(context)
                 .sideMenuSquare),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ArticlePageWithToolbar(
+                loadArticle: (int pageNo){
+                  return WanRepository().getSquareArticle(pageNo);
+                },
+                title: S.of(context).menu_square,
+              )));
+            },
           ),
           ListTile( // 设置
             leading: Icon(Icons.settings),
             title: Text(S
                 .of(context)
                 .sideMenuSettings),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => SettingPage()));
+            },
           ),
           _getLogoutMenu(context, accountModel)
         ],

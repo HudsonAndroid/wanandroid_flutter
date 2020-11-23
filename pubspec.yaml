@@ -56,6 +56,13 @@ dependencies:
   # aes 对称加密  见https://pub.dev/packages/aes_crypt
   # 用于加密用户的账号密码信息，以备首次打开APP时自动登录处理。
   aes_crypt: ^0.1.1
+  # 用于加载svg图标， more information see
+  # https://dev.to/mightytechno/render-svg-in-flutter-app-4kan
+  # https://pub.dev/packages/flutter_svg
+  flutter_svg: ^0.19.0
+  # 图片选择器，请参考https://medium.com/fabcoding/adding-an-image-picker-in-a-flutter-app-pick-images-using-camera-and-gallery-photos-7f016365d856
+  # 官方地址：https://pub.dev/packages/image_picker
+  image_picker: ^0.6.6+5
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +82,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icon_default_user.jpg
+    - assets/icon_coin.svg
+    - assets/icon_rank.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

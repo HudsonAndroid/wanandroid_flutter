@@ -4,23 +4,33 @@ import 'package:flutter/material.dart';
 
 /// 构建圆角矩形（边线）的Widget
 class RoundRectangle extends StatelessWidget{
-  final double radius;
-  final Color color;
+  final BorderRadius radius;
+  final Color borderColor;
+  final Color textColor;
   final String text;
+  final EdgeInsetsGeometry margin, padding;
 
-  RoundRectangle({this.radius, this.color, @required this.text});
+  RoundRectangle({
+    this.radius,
+    this.borderColor = Colors.deepOrange,
+    @required this.text,
+    this.textColor,
+    this.margin,
+    this.padding
+  });
 
   @override
   Widget build(BuildContext context) {
+    var roundPadding = padding == null ? EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0) : padding;
     return Container(
-      margin: EdgeInsets.fromLTRB(6.0, 2.0, 3.0, 2.0),
-      padding: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
-      alignment: Alignment.center,
-      child: Text(text, style: TextStyle(color: color, fontSize: 12.0),),
+      margin: margin,
+      padding: roundPadding,
+      // alignment: Alignment.center,
+      child: Text(text, style: TextStyle(color: textColor, fontSize: 12.0),),
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius),
-          side: BorderSide(color: color)
+            borderRadius: radius == null ? BorderRadius.circular(6.0) : radius,
+          side: BorderSide(color: borderColor)
         ),
       )
     );

@@ -21,6 +21,12 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+// 打包签名配置（配置参考自https://flutterchina.club/android-release/）
+def keystorePropertiesFile = rootProject.file('key.properties')
+def keystoreProperties = new Properties()
+
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -45,11 +51,24 @@ android {
         versionName flutterVersionName
     }
 
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+
+            // 开启混淆
+            minifyEnabled true
+            useProguard true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }

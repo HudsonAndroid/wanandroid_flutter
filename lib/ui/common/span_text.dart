@@ -43,7 +43,7 @@ class SpanText extends StatelessWidget {
     int decodeIndex = 0;
     int matchIndex;
     var normalStyle = normal ?? TextStyle(fontSize: 14, color: Colors.grey);
-    var focusStyle = focus ?? TextStyle(fontSize: 14, color: Theme.of(context).primaryColor);
+    var focusStyle = focus ?? TextStyle(fontSize: 14, color: Theme.of(context).textSelectionHandleColor);
     TextSpan item;
     while(decodeIndex < total.length){
       matchIndex = total.indexOf(span);
