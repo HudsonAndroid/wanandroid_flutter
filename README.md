@@ -115,6 +115,13 @@ Provider可以说是InheritedWidget的一种升级，是保证简洁化向子Wid
 
 更多请参考[StackOverflow上这个回答](https://stackoverflow.com/questions/59898274/flutter-provider-access-via-addpostframecallback-says-widget-is-outside-the-widg)
 
+## 后续可优化或增加的功能
+目前整套APP的结构采用SharedPreferences作为缓存，缓存了包括用户登录信息、用户头像信息等，这些数据体积相对来说较为庞大，并不是十分适合SharedPreferences，
+因此可以考虑后续优化使用[Sqflite](https://pub.dev/packages/sqflite)替换原有方案。
+
+另外，目前整套APP中没有对网络数据进行缓存，因此在没有任何网络的情况下，大部分页面都将会是加载失败状态，后续可以针对[Repository](/lib/data/repository/wan_repository.dart)
+进行升级，增加数据库缓存的逻辑，具体的实现方案可以与[Android kotlin jetpack版本WanAndroid](https://github.com/HudsonAndroid/WanAndroidJetpack)的数据缓存方案类似。
+
 ## 其他问题
 #### 项目报错，提示网络错误
 项目跑起来报错，提示网络问题，类似如下报错：
