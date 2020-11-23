@@ -77,7 +77,7 @@ class AccountProvider with ChangeNotifier {
     return userInfo == null ? false : userInfo.collectIds.contains(id);
   }
 
-  Future<bool> starOrReverseArticle(bool isNowStared, int id) async {
+  Future<bool> starOrReverseArticle(bool isNowStared, int id, {shouldNotify = false}) async {
     if(!isLogin()){
       return false;
     }
@@ -94,6 +94,9 @@ class AccountProvider with ChangeNotifier {
         userInfo.collectIds.add(id);
       }else{
         userInfo.collectIds.remove(id);
+      }
+      if(shouldNotify){
+        notifyListeners();
       }
       // 同步信息到持久性容器中。或许可以优化，不是每次操作都同步，类似android jetpack的 WorkManager定期处理
       _sync2Persistent();

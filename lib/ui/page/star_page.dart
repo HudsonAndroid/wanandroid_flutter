@@ -12,6 +12,7 @@ class StarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accountModel = Provider.of<AccountProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).my_star_article_page),
@@ -28,8 +29,7 @@ class StarPage extends StatelessWidget {
           try{
             BaseResult result = await WanRepository().unStarArticleByStarId(entity.id, entity.originId ?? -1);
             if(result.isSuccess() && entity.originId != null){
-              final accountModel = Provider.of<AccountProvider>(context, listen: false);
-              return await accountModel.starOrReverseArticle(true, entity.originId);
+              return await accountModel.starOrReverseArticle(true, entity.originId, shouldNotify: true);
             }
           }catch(e){
             print(e);
