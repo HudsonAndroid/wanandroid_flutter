@@ -455,21 +455,41 @@ class S {
     );
   }
 
-  /// `我的收藏`
+  /// `my stars`
   String get my_star_article_page {
     return Intl.message(
-      '我的收藏',
+      'my stars',
       name: 'my_star_article_page',
       desc: '',
       args: [],
     );
   }
 
-  /// `积分排行榜`
+  /// `score rank board`
   String get score_rank_page {
     return Intl.message(
-      '积分排行榜',
+      'score rank board',
       name: 'score_rank_page',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `删除`
+  String get action_delete {
+    return Intl.message(
+      '删除',
+      name: 'action_delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `抱歉，删除失败！`
+  String get tips_delete_failed {
+    return Intl.message(
+      '抱歉，删除失败！',
+      name: 'tips_delete_failed',
       desc: '',
       args: [],
     );

@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "action_clean_record" : MessageLookupByLibrary.simpleMessage(" 清空搜索记录 "),
+    "action_delete" : MessageLookupByLibrary.simpleMessage("删除"),
     "action_input_password" : MessageLookupByLibrary.simpleMessage("请输入密码"),
     "action_input_user_name" : MessageLookupByLibrary.simpleMessage("请输入用户名"),
     "action_login" : MessageLookupByLibrary.simpleMessage("登录"),
@@ -50,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "theme_mode_light" : MessageLookupByLibrary.simpleMessage("白天模式"),
     "theme_mode_system" : MessageLookupByLibrary.simpleMessage("跟随系统"),
     "tips_confirm_password" : MessageLookupByLibrary.simpleMessage("请确认密码"),
+    "tips_delete_failed" : MessageLookupByLibrary.simpleMessage("抱歉，删除失败！"),
     "tips_error_retry" : MessageLookupByLibrary.simpleMessage("加载出错了,点我重试"),
     "tips_login_failed" : MessageLookupByLibrary.simpleMessage("登录失败，原因是"),
     "tips_login_success" : MessageLookupByLibrary.simpleMessage("登录成功"),

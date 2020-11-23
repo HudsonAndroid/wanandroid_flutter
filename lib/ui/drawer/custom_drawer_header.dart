@@ -49,8 +49,9 @@ class CustomDrawerHeader extends StatelessWidget {
                         Text(accountModel.userInfo.username, style: boldTitleStyle),
                         RoundButton(
                           height: 24,
-                          text: accountModel.userScore == null ? 'lv.0' : 'lv.${accountModel.userScore.level}',
+                          text: accountModel.userScore == null ? 'Lv.0' : 'Lv.${accountModel.userScore.level}',
                           bgColor: Colors.teal,
+                          borderColor: Colors.teal,
                           margin: EdgeInsets.only(left: 10),
                           roundRadius: 6,
                           style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic),

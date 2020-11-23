@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "action_clean_record" : MessageLookupByLibrary.simpleMessage(" clean records "),
+    "action_delete" : MessageLookupByLibrary.simpleMessage("删除"),
     "action_input_password" : MessageLookupByLibrary.simpleMessage("please input account password"),
     "action_input_user_name" : MessageLookupByLibrary.simpleMessage("please input user name"),
     "action_login" : MessageLookupByLibrary.simpleMessage("login account"),
@@ -38,10 +39,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "loadMore" : MessageLookupByLibrary.simpleMessage("load more"),
     "menu_ask" : MessageLookupByLibrary.simpleMessage("ask"),
     "menu_square" : MessageLookupByLibrary.simpleMessage("square"),
-    "my_star_article_page" : MessageLookupByLibrary.simpleMessage("我的收藏"),
+    "my_star_article_page" : MessageLookupByLibrary.simpleMessage("my stars"),
     "noMoreData" : MessageLookupByLibrary.simpleMessage("no more data"),
     "projectPage" : MessageLookupByLibrary.simpleMessage("ProjectArticle"),
-    "score_rank_page" : MessageLookupByLibrary.simpleMessage("积分排行榜"),
+    "score_rank_page" : MessageLookupByLibrary.simpleMessage("score rank board"),
     "setting_app_theme" : MessageLookupByLibrary.simpleMessage("app theme"),
     "sideMenuAsk" : MessageLookupByLibrary.simpleMessage("ask"),
     "sideMenuSettings" : MessageLookupByLibrary.simpleMessage("settings"),
@@ -50,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "theme_mode_light" : MessageLookupByLibrary.simpleMessage("light mode"),
     "theme_mode_system" : MessageLookupByLibrary.simpleMessage("follow system"),
     "tips_confirm_password" : MessageLookupByLibrary.simpleMessage("please confirm password"),
+    "tips_delete_failed" : MessageLookupByLibrary.simpleMessage("抱歉，删除失败！"),
     "tips_error_retry" : MessageLookupByLibrary.simpleMessage("load failed, click me to retry"),
     "tips_login_failed" : MessageLookupByLibrary.simpleMessage("login failed, the reason is "),
     "tips_login_success" : MessageLookupByLibrary.simpleMessage("login success"),

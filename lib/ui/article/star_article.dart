@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:wanandroid_flutter/common/common_util.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
+import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/common/list_page_wrapper.dart';
 
 /// 收藏文章布局的一项，比普通文章多了originId，且取消收藏方式不同；另外没有置顶等标识。为了避免
@@ -54,7 +55,7 @@ class StarArticleItem extends StatelessWidget {
         padding: EdgeInsets.only(right: 20),
         child: Align(
           alignment: Alignment.centerRight,
-          child: Text('删除', style: TextStyle(color: Colors.white)),
+          child: Text(S.of(context).action_delete, style: TextStyle(color: Colors.white)),
         ),
         color: Colors.red,
       ),

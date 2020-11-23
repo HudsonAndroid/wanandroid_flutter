@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wanandroid_flutter/common/common_const_var.dart';
+import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/common/page_wrapper.dart';
 
 /// 加载一页数据； 确保返回的结果是列表的一页数据类型
@@ -112,7 +113,6 @@ class _ListPageWrapperState extends State<ListPageWrapper> {
     });
     if(widget.tryToDelete != null){
       bool success = await widget.tryToDelete(index, entity);
-      print('是否成功$success');
       if(!success){
         // Outer controller delete failed, we should recover it and notify user.
         setState(() {
@@ -120,7 +120,7 @@ class _ListPageWrapperState extends State<ListPageWrapper> {
         });
         Scaffold.of(context).showSnackBar(SnackBar(
           duration: const Duration(milliseconds: ConstVar.COMMON_SNACK_BAR_DURATION),
-          content: Text("抱歉，删除失败！"),
+          content: Text(S.of(context).tips_delete_failed),
         ));
       }
     }

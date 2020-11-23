@@ -42,5 +42,7 @@
   "action_switch_theme": "切换主题",
   "setting_app_theme": "应用主题",
   "my_star_article_page": "我的收藏",
-  "score_rank_page": "积分排行榜"
+  "score_rank_page": "积分排行榜",
+  "action_delete": "删除",
+  "tips_delete_failed": "抱歉，删除失败！"
 }
