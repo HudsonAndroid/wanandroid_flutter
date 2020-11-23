@@ -35,6 +35,7 @@ class TreeDetailTabPage extends StatelessWidget {
         },
         inputCategories: category.children,
         initialIndex: this.selectTabIndex,
+        articleStarIndex: 0,
       ),
     );
   }

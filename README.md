@@ -52,6 +52,10 @@ main.dart和该库的refresh_localizations.dart说明。
 使用SmartRefresher后，列表加载到底部后，我们不再需要手动监听滑动到底部的事件了，直接使用SmartRefresher的onLoading来加载更多数据。
 代码中的经典示例见[统一加载刷新页面](/lib/ui/common/page_wrapper.dart)和具体实现[HomePage](/lib/ui/page/home_page.dart)。
 
+## 图片选择
+请参考Medium上的[这篇文章](https://medium.com/fabcoding/adding-an-image-picker-in-a-flutter-app-pick-images-using-camera-and-gallery-photos-7f016365d856)
+以及[官方地址](https://pub.dev/packages/image_picker)
+
 ## 异步加载状态的显示
 
 问题产生的原因：

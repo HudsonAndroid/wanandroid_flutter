@@ -36,6 +36,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "history_search" : MessageLookupByLibrary.simpleMessage("历史搜索"),
     "homePage" : MessageLookupByLibrary.simpleMessage("首页"),
     "hot_search" : MessageLookupByLibrary.simpleMessage("热门搜索"),
+    "image_source_camera" : MessageLookupByLibrary.simpleMessage("相机"),
+    "image_source_gallery" : MessageLookupByLibrary.simpleMessage("相册"),
     "loadMore" : MessageLookupByLibrary.simpleMessage("加载更多"),
     "menu_ask" : MessageLookupByLibrary.simpleMessage("问答"),
     "menu_square" : MessageLookupByLibrary.simpleMessage("广场"),

@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:wanandroid_flutter/common/common_util.dart';
 import 'package:wanandroid_flutter/common/state/account_provider.dart';
 import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/common/round_button.dart';
+import 'package:wanandroid_flutter/ui/drawer/user_avatar.dart';
 import 'package:wanandroid_flutter/ui/page/rank_page.dart';
 
 /// 用户头部信息
@@ -32,10 +32,10 @@ class CustomDrawerHeader extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          CircleAvatar(
-            radius: 36.0,
-            backgroundImage: AssetImage(
-                assetsImg('icon_default_user', fileType: 'jpg')),
+          Container(
+            width: 80,
+            height: 80,
+            child: UserAvatar(),
           ),
           SizedBox(width: 20),
           Expanded(

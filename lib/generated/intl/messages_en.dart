@@ -22,7 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "action_clean_record" : MessageLookupByLibrary.simpleMessage(" clean records "),
-    "action_delete" : MessageLookupByLibrary.simpleMessage("删除"),
+    "action_delete" : MessageLookupByLibrary.simpleMessage("delete"),
     "action_input_password" : MessageLookupByLibrary.simpleMessage("please input account password"),
     "action_input_user_name" : MessageLookupByLibrary.simpleMessage("please input user name"),
     "action_login" : MessageLookupByLibrary.simpleMessage("login account"),
@@ -36,6 +36,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "history_search" : MessageLookupByLibrary.simpleMessage("history search"),
     "homePage" : MessageLookupByLibrary.simpleMessage("Home"),
     "hot_search" : MessageLookupByLibrary.simpleMessage("hot search"),
+    "image_source_camera" : MessageLookupByLibrary.simpleMessage("camera"),
+    "image_source_gallery" : MessageLookupByLibrary.simpleMessage("gallery"),
     "loadMore" : MessageLookupByLibrary.simpleMessage("load more"),
     "menu_ask" : MessageLookupByLibrary.simpleMessage("ask"),
     "menu_square" : MessageLookupByLibrary.simpleMessage("square"),
@@ -51,7 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "theme_mode_light" : MessageLookupByLibrary.simpleMessage("light mode"),
     "theme_mode_system" : MessageLookupByLibrary.simpleMessage("follow system"),
     "tips_confirm_password" : MessageLookupByLibrary.simpleMessage("please confirm password"),
-    "tips_delete_failed" : MessageLookupByLibrary.simpleMessage("抱歉，删除失败！"),
+    "tips_delete_failed" : MessageLookupByLibrary.simpleMessage("Sorry, delete failed!"),
     "tips_error_retry" : MessageLookupByLibrary.simpleMessage("load failed, click me to retry"),
     "tips_login_failed" : MessageLookupByLibrary.simpleMessage("login failed, the reason is "),
     "tips_login_success" : MessageLookupByLibrary.simpleMessage("login success"),

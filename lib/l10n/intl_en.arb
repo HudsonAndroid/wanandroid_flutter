@@ -43,6 +43,8 @@
   "setting_app_theme": "app theme",
   "my_star_article_page": "my stars",
   "score_rank_page": "score rank board",
-  "action_delete": "删除",
-  "tips_delete_failed": "抱歉，删除失败！"
+  "action_delete": "delete",
+  "tips_delete_failed": "Sorry, delete failed!",
+  "image_source_gallery": "gallery",
+  "image_source_camera": "camera"
 }

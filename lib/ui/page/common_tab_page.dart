@@ -20,7 +20,8 @@ class CommonTabPage extends StatefulWidget {
     this.loadTabCategories,
     this.loadCategoryArticle,
     this.inputCategories,
-    this.initialIndex = 0
+    this.initialIndex = 0,
+    this.articleStarIndex
   }) : super(key: key);
 
   final String title;
@@ -28,6 +29,7 @@ class CommonTabPage extends StatefulWidget {
   final LoadCategoryArticle loadCategoryArticle;
   final List<Category> inputCategories;
   final int initialIndex;
+  final int articleStarIndex;
 
   @override
   _CommonTabPageState createState() => _CommonTabPageState();
@@ -97,7 +99,7 @@ class _CommonTabPageState extends State<CommonTabPage> with SingleTickerProvider
                     controller: _tabController,
                     children: List<Widget>.generate(categories.length, (index){
                       return ArticlePage(
-                        startPage: 1,
+                        startPage: widget.articleStarIndex ?? 1,
                         loadArticle: (int curPage) {
                           return widget.loadCategoryArticle(categories[index].id, curPage);
                         },

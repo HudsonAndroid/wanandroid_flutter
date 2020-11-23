@@ -44,5 +44,7 @@
   "my_star_article_page": "我的收藏",
   "score_rank_page": "积分排行榜",
   "action_delete": "删除",
-  "tips_delete_failed": "抱歉，删除失败！"
+  "tips_delete_failed": "抱歉，删除失败！",
+  "image_source_gallery": "相册",
+  "image_source_camera": "相机"
 }

@@ -12,13 +12,15 @@ import 'package:wanandroid_flutter/data/entity/user_score.dart';
 import 'package:wanandroid_flutter/data/repository/wan_repository.dart';
 
 /// 账号系统，目前收藏的列表是通过SharedPreferences存储的，更合理的操作的话，应该让
-/// 数据库存储
+/// 数据库存储。 目前头像信息是单独存储一个key的，因为头像数据无法同步到服务器，因此
+/// 让本地暂存所有登录过的账号自定义头像。
 class AccountProvider with ChangeNotifier {
   static const String KEY_LOGIN_CACHE = "login_cache";
   static const String KEY_LAST_LOGIN_USER = "last_login";
   static const String KEY_SCORE_CACHE = "score_cache";
   UserInfo userInfo;
   UserScore userScore;
+  String avatar; // file path
 
   AccountProvider(){
     initUserInfo();
@@ -133,6 +135,37 @@ class AccountProvider with ChangeNotifier {
         notifyListeners();
       }
       return score;
+    }
+  }
+
+  Future<String> initAvatar() async {
+    if(avatar == null){
+      if(!isLogin()){
+        return null;
+      }
+      // find from SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String filePath = prefs.getString("${userInfo.id.toString()}avatar");
+      File file = File(filePath);
+      if(file.existsSync()){
+        avatar = filePath;
+        notifyListeners();
+        return filePath;
+      }
+      return null;
+    }
+    return avatar;
+  }
+
+  changeAvatarPath(String path) async {
+    if(isLogin()){
+      File file = File(path);
+      if(file.existsSync()){
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("${userInfo.id.toString()}avatar", path);
+        avatar = path;
+        notifyListeners();
+      }
     }
   }
 

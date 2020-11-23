@@ -60,6 +60,9 @@ dependencies:
   # https://dev.to/mightytechno/render-svg-in-flutter-app-4kan
   # https://pub.dev/packages/flutter_svg
   flutter_svg: ^0.19.0
+  # 图片选择器，请参考https://medium.com/fabcoding/adding-an-image-picker-in-a-flutter-app-pick-images-using-camera-and-gallery-photos-7f016365d856
+  # 官方地址：https://pub.dev/packages/image_picker
+  image_picker: ^0.6.6+5
 
 dev_dependencies:
   flutter_test:

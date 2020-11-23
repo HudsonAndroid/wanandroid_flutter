@@ -475,21 +475,41 @@ class S {
     );
   }
 
-  /// `删除`
+  /// `delete`
   String get action_delete {
     return Intl.message(
-      '删除',
+      'delete',
       name: 'action_delete',
       desc: '',
       args: [],
     );
   }
 
-  /// `抱歉，删除失败！`
+  /// `Sorry, delete failed!`
   String get tips_delete_failed {
     return Intl.message(
-      '抱歉，删除失败！',
+      'Sorry, delete failed!',
       name: 'tips_delete_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `gallery`
+  String get image_source_gallery {
+    return Intl.message(
+      'gallery',
+      name: 'image_source_gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `camera`
+  String get image_source_camera {
+    return Intl.message(
+      'camera',
+      name: 'image_source_camera',
       desc: '',
       args: [],
     );
