@@ -50,7 +50,7 @@ class _CommonTabPageState extends State<CommonTabPage> with SingleTickerProvider
     _loadCategory();
   }
 
-  _loadCategory() async {
+  _loadCategory({bool refresh = false}) async {
     try{
       if(widget.inputCategories != null){
         categories = widget.inputCategories;
@@ -62,6 +62,10 @@ class _CommonTabPageState extends State<CommonTabPage> with SingleTickerProvider
           initialIndex: widget.initialIndex,
           vsync: this,
           length: categories.length);
+      if(refresh){
+        // 如果是刷新，获取成功后，要重新刷新页面
+        setState(() {});
+      }
     }catch(e){
       // 如果中间出现错误，那么说明加载完成了，进一步判定tabController是否是null来决定是否加载失败
       hasLoadCompleted = true;
@@ -80,7 +84,9 @@ class _CommonTabPageState extends State<CommonTabPage> with SingleTickerProvider
           width: double.infinity,
           color: Theme.of(context).cardColor,
           child: InkWell(
-            onTap: _loadCategory,// 重试操作
+            onTap: (){
+              _loadCategory(refresh: true);
+            },// 重试操作
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
