@@ -3,6 +3,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wanandroid_flutter/common/common_const_var.dart';
 import 'package:wanandroid_flutter/data/entity/category.dart';
 import 'package:wanandroid_flutter/data/entity/wan_article.dart';
+import 'package:wanandroid_flutter/generated/l10n.dart';
 import 'package:wanandroid_flutter/ui/common/page_wrapper.dart';
 import 'package:wanandroid_flutter/ui/page/article_page.dart';
 
@@ -40,6 +41,7 @@ class _CommonTabPageState extends State<CommonTabPage> with SingleTickerProvider
   TabController _tabController;
   List<Category> categories = [];
   Future category;
+  bool hasLoadCompleted = false;
 
   @override
   void initState() {
@@ -49,21 +51,46 @@ class _CommonTabPageState extends State<CommonTabPage> with SingleTickerProvider
   }
 
   _loadCategory() async {
-    if(widget.inputCategories != null){
-      categories = widget.inputCategories;
-    }else{
-      category = widget.loadTabCategories();
-      categories = await category;
+    try{
+      if(widget.inputCategories != null){
+        categories = widget.inputCategories;
+      }else{
+        category = widget.loadTabCategories();
+        categories = await category;
+      }
+      _tabController = TabController(
+          initialIndex: widget.initialIndex,
+          vsync: this,
+          length: categories.length);
+    }catch(e){
+      // 如果中间出现错误，那么说明加载完成了，进一步判定tabController是否是null来决定是否加载失败
+      hasLoadCompleted = true;
+      setState(() {});
     }
-    _tabController = TabController(
-        initialIndex: widget.initialIndex,
-        vsync: this,
-        length: categories.length);
   }
 
   @override
   Widget build(BuildContext context) {
     if(_tabController == null) {
+      // 如果tabController是空的，不应该只是展示loading，我们需要自行根据情况
+      // 判定成功和失败
+      if(hasLoadCompleted){
+        // 说明失败了
+        return Container(
+          width: double.infinity,
+          color: Theme.of(context).cardColor,
+          child: InkWell(
+            onTap: _loadCategory,// 重试操作
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.mood_bad),
+                Text(S.of(context).tips_error_retry)
+              ],
+            ),
+          ),
+        );
+      }
       return Container(
         alignment: Alignment.center,
         child: CircularProgressIndicator(),

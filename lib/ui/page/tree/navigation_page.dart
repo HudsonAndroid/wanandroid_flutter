@@ -27,6 +27,7 @@ class NavigationPageState extends State<NavigationPage> {
     navigation = WanRepository().getNavigationList();
     NavigationWrapper result = await navigation;
     navigationList = result.data;
+    setState(() {});
   }
 
   @override
