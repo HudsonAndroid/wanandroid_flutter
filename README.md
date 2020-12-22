@@ -19,7 +19,7 @@ common包含了公用视图；drawer是侧边栏视图；page是所有各个页�
 - entity包： 所有网络数据实体对应的实际类的包
 - repository包： 所有网络请求相关的接口和数据处理都在这个包中
 
-处理上面视图层和数据层外，还有其他包。 其中common中包括了状态管理包(state包)和其他一些通用的代码逻辑；generated包和
+除了上面视图层和数据层外，还有其他包。 其中common中包括了状态管理包(state包)和其他一些通用的代码逻辑；generated包和
 l10n包是由国际化插件[Flutter Intl](https://plugins.jetbrains.com/plugin/13666-flutter-intl)自动生成的包，一般
 情况下不需要修改它们。
 
