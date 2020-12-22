@@ -1,6 +1,7 @@
 # wanandroid_flutter
 
-wanandroid flutter版本，android版APK包[下载地址](/android/app/release/app-release.apk)
+wanandroid flutter版本，android版APK包[下载地址](/android/app/release/app-release-all.apk)，注意：提供的链接是
+支持arm、arm64、x64所有CPU架构的APK包，因此APK体积较大，如果需要单独下载某一个CPU架构的APK包（体积更小），[点击这里](/android/app/release)。
 
 ## UI展示
 <img src="displayImages/home.jpg" width="320" alt="主页夜间模式"/>  <img src="displayImages/lightMode.jpg" width="320" alt="白天模式-项目"/>
