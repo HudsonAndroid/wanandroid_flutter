@@ -1,8 +1,13 @@
 # wanandroid_flutter
 
-wanandroid flutter version
+wanandroid flutter版本，android版APK包[下载地址](/android/app/release/app-release.apk)
 
-# 包结构说明
+## UI展示
+<img src="displayImages/home.jpg" width="320" alt="主页夜间模式"/>  <img src="displayImages/lightMode.jpg" width="320" alt="白天模式-项目"/>
+<img src="displayImages/sideMenu.jpg" width="320" alt="侧边栏"/>  <img src="displayImages/search_record.jpg" width="320" alt="搜索页面夜间模式"/>
+<img src="displayImages/lightSearch.jpg" width="320" alt="搜索白天模式"/>
+
+## 包结构说明
 项目代码整体包结构以视图层和数据层区分开。
 
 视图层(ui包)中包括了所有的与界面元素相关的代码或Widget，其中article包是文章列表的一项视图；banner是滚动轮播的视图；
@@ -17,7 +22,7 @@ common包含了公用视图；drawer是侧边栏视图；page是所有各个页�
 l10n包是由国际化插件[Flutter Intl](https://plugins.jetbrains.com/plugin/13666-flutter-intl)自动生成的包，一般
 情况下不需要修改它们。
 
-# 实践内容
+## 实践内容
 
 ## [Banner实践](/lib/ui/banner)
 
