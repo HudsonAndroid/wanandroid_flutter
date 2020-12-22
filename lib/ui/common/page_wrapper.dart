@@ -79,7 +79,7 @@ class _LoadStateIndicator extends StatelessWidget {
         // 外面包裹一层container，以居中和覆盖内容部分
         return Container(
           width: double.infinity,
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           child: InkWell(
             onTap: refreshOpt,
             child: Column(
