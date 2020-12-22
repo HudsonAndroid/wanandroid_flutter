@@ -30,6 +30,7 @@ class _TreePageState extends State<TreePage> {
     category = WanRepository().getTreeCategory();
     CategoryWrapper result = await category;
     categories = result.data;
+    setState(() {});
   }
 
   @override
